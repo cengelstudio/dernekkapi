@@ -57,6 +57,15 @@
         </div>
     </div>
     <div class="col-md-2 mb-3">
+        <div class="stats-card info">
+            <div class="icon">
+                <i class="fas fa-receipt"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('status', 'equalto', 'receipt_pending')|list|length }}</div>
+            <div class="stats-label">Makbuz Bekleyen</div>
+        </div>
+    </div>
+    <div class="col-md-2 mb-3">
         <div class="stats-card success">
             <div class="icon">
                 <i class="fas fa-check"></i>
@@ -193,6 +202,11 @@
                                         <span class="badge bg-warning">
                                             <i class="fas fa-clock me-1"></i>
                                             Onay Bekliyor
+                                        </span>
+                                    {% elif member.status == 'receipt_pending' %}
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-receipt me-1"></i>
+                                            Makbuz Bekliyor
                                         </span>
                                     {% elif member.status == 'approved' %}
                                         <span class="badge bg-success">

@@ -52,7 +52,7 @@ except ImportError:
 class IcisleriSubmitBot:
     """İçişleri Bakanlığı sistemine üye kaydetme botu"""
 
-    def __init__(self, headless=True, progress_callback=None):  # Headless modu varsayılan olarak açık
+    def __init__(self, headless=None, progress_callback=None):  # Headless değeri config'den alınacak
         self.driver = None
         self.is_logged_in = False
         self.headless = headless
@@ -62,8 +62,18 @@ class IcisleriSubmitBot:
         try:
             from config import BOT_CONFIG
             self.wait_timeout = BOT_CONFIG.get('wait_timeout', 10)
+            # Headless değerini config'den al, eğer parametre olarak verilmemişse
+            if headless is None:
+                self.headless = BOT_CONFIG.get('headless', True)
+            else:
+                self.headless = headless
         except ImportError:
             self.wait_timeout = 10
+            # Config bulunamazsa varsayılan değerler
+            if headless is None:
+                self.headless = True
+            else:
+                self.headless = headless
 
     def safe_input_fill(self, xpath, value, field_name):
         """Güvenli input doldurma fonksiyonu"""
@@ -460,8 +470,8 @@ class IcisleriSubmitBot:
                     "Doğum tarihi"
                 )
 
-                        if self.progress_callback:
-                self.progress_callback("Kaydet butonuna tıklanıyor...", 80)
+                if self.progress_callback:
+                    self.progress_callback("Kaydet butonuna tıklanıyor...", 80)
             logger.info("💾 Kaydet butonuna tıklanıyor...")
             # Kaydet butonu
             try:

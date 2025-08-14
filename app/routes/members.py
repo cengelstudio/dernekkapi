@@ -220,6 +220,11 @@ def list():
         if not has_receipt_this_year:
             members_without_receipts.append(member)
 
+    # Makbuz durumunu kontrol et ve status'ları güncelle
+    from app.services.db import check_member_receipt_status
+    for member in members:
+        member.status = check_member_receipt_status(member)
+
     return render_template('member_list.jinja2',
                          members=members,
                          members_without_receipts=members_without_receipts,
@@ -269,6 +274,11 @@ def upload_receipt(member_id):
     receipt = Receipt(member_id, association_id, file_path)
 
     if create_receipt(receipt):
+        # Makbuz yüklendikten sonra üye status'unu güncelle
+        from app.services.db import check_member_receipt_status
+        member.status = check_member_receipt_status(member)
+        update_member(member)
+
         flash('Makbuz başarıyla yüklendi', 'success')
     else:
         flash('Makbuz kaydedilirken hata oluştu', 'error')

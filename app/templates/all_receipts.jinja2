@@ -21,7 +21,7 @@
                 {% if receipts %}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
-                        <thead>
+                        <thead class="d-none d-md-table-header-group">
                             <tr>
                                 <th>Makbuz ID</th>
                                 <th>Dernek</th>
@@ -35,36 +35,64 @@
                             {% for receipt_data in receipts %}
                             <tr>
                                 <td>
+                                    <div class="d-md-none">
+                                        <strong>Makbuz ID:</strong><br>
+                                    </div>
                                     <code>{{ receipt_data.receipt.id[:8] }}...</code>
                                 </td>
                                 <td>
+                                    <div class="d-md-none">
+                                        <strong>Dernek:</strong><br>
+                                    </div>
                                     <span class="badge bg-primary">{{ receipt_data.association.name }}</span>
                                     <br>
                                     <small class="text-muted">{{ receipt_data.association.governmentId }}</small>
                                 </td>
                                 <td>
-                                    <code>{{ receipt_data.receipt.memberId[:8] }}...</code>
+                                    <div class="d-md-none">
+                                        <strong>Üye:</strong><br>
+                                    </div>
+                                    {% if receipt_data.member %}
+                                        <strong>{{ receipt_data.member.firstName }} {{ receipt_data.member.lastName }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ receipt_data.member.identityNumber }}</small>
+                                        <br>
+                                        <span class="badge bg-info">{{ receipt_data.member.membershipYear }}</span>
+                                    {% else %}
+                                        <code>{{ receipt_data.receipt.memberId[:8] }}...</code>
+                                        <br>
+                                        <small class="text-muted text-danger">Üye bulunamadı</small>
+                                    {% endif %}
                                 </td>
                                 <td>
+                                    <div class="d-md-none">
+                                        <strong>Makbuz:</strong><br>
+                                    </div>
                                     <strong>Makbuz #{{ loop.index }}</strong>
                                     <br>
                                     <small class="text-muted">{{ receipt_data.association.name }}</small>
                                 </td>
                                 <td>
+                                    <div class="d-md-none">
+                                        <strong>Yükleme Tarihi:</strong><br>
+                                    </div>
                                     {{ receipt_data.receipt.uploadDate|datetime }}
                                 </td>
                                 <td>
+                                    <div class="d-md-none">
+                                        <strong>İşlemler:</strong><br>
+                                    </div>
                                     <div class="btn-group" role="group">
                                         <a href="{{ url_for('static', filename=receipt_data.receipt.uploadPath) }}"
-                                           class="btn btn-sm btn-outline-primary" target="_blank">
+                                           class="btn btn-sm btn-outline-primary" target="_blank" title="Görüntüle">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-outline-info"
-                                                onclick="showReceiptDetails('{{ receipt_data.receipt.id }}')">
-                                            <i class="fas fa-info-circle"></i>
-                                        </button>
+                                        <a href="{{ url_for('admin.receipt_details', receipt_id=receipt_data.receipt.id) }}"
+                                           class="btn btn-sm btn-outline-info" title="Üye Bilgileri">
+                                            <i class="fas fa-user"></i>
+                                        </a>
                                         <button type="button" class="btn btn-sm btn-outline-success"
-                                                onclick="downloadReceipt('{{ receipt_data.receipt.uploadPath }}')">
+                                                onclick="downloadReceipt('{{ receipt_data.receipt.uploadPath }}')" title="İndir">
                                             <i class="fas fa-download"></i>
                                         </button>
                                     </div>
@@ -86,28 +114,12 @@
     </div>
 </div>
 
-<!-- Receipt Details Modal -->
-<div class="modal fade" id="receiptDetailsModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Makbuz Detayları</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="receiptDetailsContent">
-                <!-- Content will be loaded here -->
-            </div>
-        </div>
-    </div>
-</div>
+
 {% endblock %}
 
 {% block extra_js %}
 <script>
-function showReceiptDetails(receiptId) {
-    // Bu fonksiyon AJAX ile makbuz detaylarını yükleyebilir
-    alert('Makbuz detayları yükleniyor... (Receipt ID: ' + receiptId + ')');
-}
+
 
 function downloadReceipt(filePath) {
     // Bu fonksiyon makbuzu indirebilir

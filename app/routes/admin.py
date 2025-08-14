@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request, jsonify
 from app.services.db import get_all_associations, get_members_by_association, get_receipts_by_association
-from app.services.db import get_all_admin_users, create_admin_user, get_admin_user_by_id, get_admin_user_by_username, update_admin_user, delete_admin_user, get_association_by_username
+from app.services.db import get_all_admin_users, create_admin_user, get_admin_user_by_id, get_admin_user_by_username, update_admin_user, delete_admin_user, get_association_by_username, get_association_by_id
 from app.services.jwt_service import get_user_from_token, create_association_token
 from app.models import AdminUser
 from datetime import datetime
@@ -132,12 +132,17 @@ def association_detail(association_id):
 @admin_required
 def all_members():
     """Tüm üyeleri listele"""
+    from app.services.db import check_member_receipt_status
+
     associations = get_all_associations()
     all_members = []
 
     for association in associations:
         members = get_members_by_association(association.id)
         for member in members:
+            # Makbuz durumunu kontrol et ve status'u güncelle
+            member.status = check_member_receipt_status(member)
+
             all_members.append({
                 'member': member,
                 'association': association
@@ -184,7 +189,7 @@ def approve_member(member_id):
         return redirect(url_for('admin.all_members'))
 
     # İçişleri Bakanlığı sistemine kaydet
-    bot = IcisleriSubmitBot(headless=True, progress_callback=progress_callback)  # Headless mod
+    bot = IcisleriSubmitBot(progress_callback=progress_callback)  # Headless değeri config'den alınacak
     try:
         # Giriş yap
         if not bot.login_to_icisleri(ICISLERI_CONFIG['username'], ICISLERI_CONFIG['password']):
@@ -198,23 +203,28 @@ def approve_member(member_id):
         result = bot.submit_member_to_icisleri(member_data, association_data)
 
         if result['success']:
-            # Üye durumunu güncelle
-            member.status = 'approved'
-            member.approved_by = admin_user.full_name if admin_user else 'Bilinmeyen'
-            member.approved_at = str(int(datetime.now().timestamp()))
-            member.updated_at = str(int(datetime.now().timestamp()))
+            # Mesaj türüne göre renklendirme ve status güncelleme
+            modal_message = result.get("message", "")
+
+            if "Yeni Kayıt Yapıldı" in modal_message:
+                # Sadece "Yeni Kayıt Yapıldı" mesajı geldiğinde status'u approved yap
+                member.status = 'approved'
+                member.approved_by = admin_user.full_name if admin_user else 'Bilinmeyen'
+                member.approved_at = str(int(datetime.now().timestamp()))
+                member.updated_at = str(int(datetime.now().timestamp()))
+
+                message_type = "success"
+                message_title = "✅ Başarılı"
+                success_message = f'{member.firstName} {member.lastName} başarıyla onaylandı ve İçişleri Bakanlığı sistemine kaydedildi.'
+            else:
+                # Diğer mesajlar geldiğinde status değişmesin, hala onay bekliyor
+                member.updated_at = str(int(datetime.now().timestamp()))
+
+                message_type = "warning"
+                message_title = "⚠️ Uyarı"
+                success_message = f'{member.firstName} {member.lastName} için İçişleri Bakanlığı sisteminden mesaj alındı: {modal_message}'
 
             if update_member(member):
-                # Mesaj türüne göre renklendirme
-                modal_message = result.get("message", "")
-                if "Yeni Kayıt Yapıldı" in modal_message:
-                    message_type = "success"
-                    message_title = "✅ Başarılı"
-                else:
-                    message_type = "warning"
-                    message_title = "⚠️ Uyarı"
-
-                success_message = f'{member.firstName} {member.lastName} başarıyla onaylandı ve İçişleri Bakanlığı sistemine kaydedildi.'
 
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                     return jsonify({
@@ -288,18 +298,42 @@ def reject_member(member_id):
 @admin_required
 def all_receipts():
     """Tüm makbuzları listele"""
+    from app.services.db import get_member_by_id
+
     associations = get_all_associations()
     all_receipts = []
 
     for association in associations:
         receipts = get_receipts_by_association(association.id)
         for receipt in receipts:
+            # Üye bilgilerini al
+            member = get_member_by_id(receipt.memberId)
             all_receipts.append({
                 'receipt': receipt,
-                'association': association
+                'association': association,
+                'member': member
             })
 
     return render_template('all_receipts.jinja2', receipts=all_receipts)
+
+@bp.route('/receipts/<receipt_id>/details')
+@admin_required
+def receipt_details(receipt_id):
+    """Makbuz detaylarına tıklandığında üye detay sayfasına yönlendir"""
+    from app.services.db import get_receipt_by_id, get_member_by_id
+
+    receipt = get_receipt_by_id(receipt_id)
+    if not receipt:
+        flash('Makbuz bulunamadı', 'error')
+        return redirect(url_for('admin.receipts'))
+
+    member = get_member_by_id(receipt.memberId)
+    if not member:
+        flash('Üye bilgileri bulunamadı', 'error')
+        return redirect(url_for('admin.receipts'))
+
+    # Üye detay sayfasına yönlendir
+    return redirect(url_for('members.detail', member_id=member.id))
 
 # Yönetici Kullanıcı Yönetimi
 @bp.route('/users')

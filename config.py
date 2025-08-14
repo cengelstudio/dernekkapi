@@ -10,7 +10,7 @@ ICISLERI_CONFIG = {
 
 # Bot Konfigürasyonu
 BOT_CONFIG = {
-    'headless': False,  # Headless mod (True/False) - Debug için False
+    'headless': True,  # Headless mod (True/False) - Production için True
     'wait_timeout': 10,  # Saniye cinsinden bekleme süresi
     'implicit_wait': 5,  # Saniye cinsinden implicit bekleme
     'window_size': '1920,1080',  # Pencere boyutu

@@ -220,7 +220,7 @@
                     <div class="info-row">
                         <span class="info-label">Durum:</span>
                         <span class="info-value">
-                            {% if member.status == 'pending' %}
+                            {% if member.status == 'pending' or member.status == 'receipt_pending' %}
                                 <span class="badge bg-warning">Onay Bekliyor</span>
                             {% elif member.status == 'approved' %}
                                 <span class="badge bg-success">Onaylandı</span>

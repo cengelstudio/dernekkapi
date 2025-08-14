@@ -143,7 +143,7 @@ class Member:
         }
         self.association = association_id
         self.membershipYear = str(datetime.now().year)
-        self.status = "pending"  # "pending", "approved", "rejected"
+        self.status = "pending"  # "pending", "receipt_pending", "approved", "rejected"
         self.created_at = str(int(datetime.now().timestamp()))
         self.updated_at = str(int(datetime.now().timestamp()))
         self.approved_by = ""

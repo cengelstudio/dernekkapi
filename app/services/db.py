@@ -481,3 +481,46 @@ def get_receipts_by_member(member_id: str) -> List[Receipt]:
     conn.close()
 
     return [Receipt.from_dict(dict(row)) for row in receipt_data]
+
+def get_receipt_by_id(receipt_id: str) -> Optional[Receipt]:
+    """ID'ye göre makbuz getir"""
+    conn = get_db_connection()
+    receipt_data = conn.execute('SELECT * FROM receipts WHERE id = ?', (receipt_id,)).fetchone()
+    conn.close()
+
+    if receipt_data:
+        return Receipt.from_dict(dict(receipt_data))
+    return None
+
+def has_receipt_for_current_year(member_id: str, current_year: str) -> bool:
+    """Üyenin bu yıl için makbuzu var mı kontrol et"""
+    conn = get_db_connection()
+    # Üyenin bu yıl için makbuzu var mı kontrol et
+    receipt_data = conn.execute('''
+        SELECT r.* FROM receipts r
+        JOIN members m ON r.memberId = m.id
+        WHERE r.memberId = ? AND m.membershipYear = ?
+    ''', (member_id, current_year)).fetchone()
+    conn.close()
+
+    return receipt_data is not None
+
+def check_member_receipt_status(member: Member) -> str:
+    """Üyenin makbuz durumunu kontrol et ve uygun status döndür"""
+    from datetime import datetime
+
+    current_year = str(datetime.now().year)
+
+    # Eğer üye bu yıl için değilse, makbuz kontrolü yapma
+    if member.membershipYear != current_year:
+        return member.status
+
+    # Bu yıl için makbuz var mı kontrol et
+    has_receipt = has_receipt_for_current_year(member.id, current_year)
+
+    if member.status == "pending" and not has_receipt:
+        return "receipt_pending"
+    elif member.status == "receipt_pending" and has_receipt:
+        return "pending"
+
+    return member.status

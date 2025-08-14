@@ -21,7 +21,7 @@
                 {% if members %}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
-                        <thead>
+                        <thead class="d-none d-lg-table-header-group">
                             <tr>
                                 <th>Kimlik No</th>
                                 <th>Ad Soyad</th>
@@ -37,11 +37,17 @@
                             {% for member_data in members %}
                             <tr>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>Kimlik No:</strong><br>
+                                    </div>
                                     <strong>{{ member_data.member.identityNumber }}</strong>
                                     <br>
                                     <small class="text-muted">{{ member_data.member.nationality }}</small>
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>Ad Soyad:</strong><br>
+                                    </div>
                                     <strong>{{ member_data.member.firstName }} {{ member_data.member.lastName }}</strong>
                                     {% if member_data.member.middleName %}
                                         <br>
@@ -49,11 +55,17 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>Dernek:</strong><br>
+                                    </div>
                                     <span class="badge bg-primary">{{ member_data.association.name }}</span>
                                     <br>
                                     <small class="text-muted">{{ member_data.association.governmentId }}</small>
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>Telefon:</strong><br>
+                                    </div>
                                     {% if member_data.member.phoneNumber %}
                                         {{ member_data.member.phoneNumber }}
                                     {% else %}
@@ -61,6 +73,9 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>GSM:</strong><br>
+                                    </div>
                                     {% if member_data.member.gsm.number != '0000000' %}
                                         {{ member_data.member.gsm.countryCode }}{{ member_data.member.gsm.operatorCode }}{{ member_data.member.gsm.number }}
                                     {% else %}
@@ -68,13 +83,24 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>Üyelik Yılı:</strong><br>
+                                    </div>
                                     <span class="badge bg-info">{{ member_data.member.membershipYear }}</span>
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>Durum:</strong><br>
+                                    </div>
                                     {% if member_data.member.status == 'pending' %}
                                         <span class="badge bg-warning">
                                             <i class="fas fa-clock me-1"></i>
                                             Onay Bekliyor
+                                        </span>
+                                    {% elif member_data.member.status == 'receipt_pending' %}
+                                        <span class="badge bg-info">
+                                            <i class="fas fa-receipt me-1"></i>
+                                            Makbuz Bekliyor
                                         </span>
                                     {% elif member_data.member.status == 'approved' %}
                                         <span class="badge bg-success">
@@ -91,6 +117,9 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    <div class="d-lg-none">
+                                        <strong>İşlemler:</strong><br>
+                                    </div>
                                     <div class="btn-group" role="group">
                                         <a href="{{ url_for('members.detail', member_id=member_data.member.id) }}"
                                            class="btn btn-sm btn-outline-primary" title="Üye Detayları">
@@ -108,7 +137,12 @@
                                             <button type="button" class="btn btn-sm btn-outline-danger"
                                                     onclick="rejectMember('{{ member_data.member.id }}')" title="Reddet">
                                                 <i class="fas fa-times"></i>
-                                        </button>
+                                            </button>
+                                        {% elif member_data.member.status == 'receipt_pending' %}
+                                            <button type="button" class="btn btn-sm btn-outline-warning"
+                                                    onclick="showReceiptWarning('{{ member_data.member.id }}')" title="Makbuz Uyarısı">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </button>
                                         {% endif %}
                                     </div>
                                 </td>
@@ -139,6 +173,35 @@
             </div>
             <div class="modal-body" id="memberDetailsContent">
                 <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Receipt Warning Modal -->
+<div class="modal fade" id="receiptWarningModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Makbuz Uyarısı
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-receipt me-2"></i>
+                    <strong>Dikkat!</strong> Bu üye için makbuz yüklenmemiş.
+                </div>
+                <p>Bu yıl için üye kaydı yapılmış ancak makbuz henüz yüklenmemiş. Makbuz yüklendikten sonra onaylama işlemi yapılabilir.</p>
+                <p class="text-muted small">
+                    <i class="fas fa-info-circle me-1"></i>
+                    Geçmiş yıllara ait üyeler bu kontrolden muaf tutulur.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
             </div>
         </div>
     </div>
@@ -392,6 +455,11 @@ document.getElementById('closeApprovalModal').addEventListener('click', function
         window.location.reload();
     }, 500);
 });
+
+function showReceiptWarning(memberId) {
+    const modal = new bootstrap.Modal(document.getElementById('receiptWarningModal'));
+    modal.show();
+}
 
 function rejectMember(memberId) {
     currentMemberId = memberId;
