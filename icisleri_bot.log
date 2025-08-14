@@ -1,0 +1,31 @@
+2025-07-30 17:27:20,920 - ERROR - Driver başlatılırken hata oluştu: Driver error
+2025-07-30 17:27:20,921 - INFO - Chrome driver başarıyla başlatıldı
+2025-07-30 17:27:20,921 - INFO - Tarayıcı kapatıldı
+2025-07-30 17:27:50,957 - INFO - Chrome driver başarıyla başlatıldı
+2025-07-30 17:27:50,958 - INFO - Login sayfasına gidiliyor: https://asilah.icisleri.gov.ct.tr/Security/Login/
+2025-07-30 17:28:16,197 - ERROR - Login sayfası yüklenirken zaman aşımı
+2025-07-30 17:28:16,197 - ERROR - Login başarısız, işlem durduruluyor!
+2025-07-30 17:28:16,554 - INFO - Tarayıcı kapatıldı
+2025-07-30 17:30:02,959 - INFO - Chrome driver başarıyla başlatıldı
+2025-07-30 17:30:02,960 - INFO - Login sayfasına gidiliyor: https://asilah.icisleri.gov.ct.tr/Security/Login/
+2025-07-30 17:30:08,712 - INFO - Kullanıcı adı girildi
+2025-07-30 17:30:08,824 - INFO - Şifre girildi
+2025-07-30 17:30:11,272 - INFO - Login butonuna tıklandı
+2025-07-30 17:30:16,282 - INFO - Login başarılı!
+2025-07-30 17:30:16,282 - INFO - Hedef sayfaya gidiliyor: https://asilah.icisleri.gov.ct.tr/AvcilikAticilikDernekUye
+2025-07-30 17:30:23,226 - INFO - Buton aranıyor: /html/body/div[3]/div/div[2]/div[2]/div[3]/div[1]/div[2]/div/div[2]/button[1]
+2025-07-30 17:30:24,210 - INFO - Butona başarıyla tıklandı!
+2025-07-30 17:30:27,784 - INFO - Ekran görüntüsü alındı: test_screenshot.png
+2025-07-30 17:30:27,784 - INFO - Bot işlemi başarıyla tamamlandı!
+2025-07-30 17:30:27,993 - INFO - Tarayıcı kapatıldı
+2025-07-30 17:39:14,924 - INFO - Chrome driver başarıyla başlatıldı
+2025-07-30 17:39:14,928 - INFO - Login sayfasına gidiliyor: https://asilah.icisleri.gov.ct.tr/Security/Login/
+2025-07-30 17:39:25,068 - INFO - Kullanıcı adı girildi
+2025-07-30 17:39:25,570 - INFO - Şifre girildi
+2025-07-30 17:39:29,775 - INFO - Login butonuna tıklandı
+2025-07-30 17:39:34,821 - INFO - Login başarılı!
+2025-07-30 17:39:34,822 - INFO - Hedef sayfaya gidiliyor: https://asilah.icisleri.gov.ct.tr/AvcilikAticilikDernekUye/Yeni?kimlikNumarasi=1840227874
+2025-07-30 17:39:42,783 - INFO - Buton aranıyor: /html/body/div[3]/div/div[2]/div[2]/div[3]/div[1]/div[2]/div/div[2]/button[1]
+2025-07-30 17:40:03,163 - ERROR - Buton bulunamadı veya tıklanamadı
+2025-07-30 17:40:03,164 - ERROR - Hedef sayfa işlemi başarısız!
+2025-07-30 17:40:03,942 - INFO - Tarayıcı kapatıldı

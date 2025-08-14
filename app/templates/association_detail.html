@@ -1,0 +1,200 @@
+{% extends "layout.html" %}
+
+{% block title %}Dernek Detayı - DernekKapı{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ association.name }}</h1>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>
+        Geri Dön
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Dernek Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Dernek Adı:</strong> {{ association.name }}</p>
+                <p><strong>Devlet ID:</strong> {{ association.governmentId }}</p>
+                <p><strong>Kullanıcı Adı:</strong> {{ association.username }}</p>
+                <p><strong>Son Giriş:</strong>
+                    {% if association.last_login %}
+                        {{ association.last_login|datetime }}
+                    {% else %}
+                        <span class="text-muted">Hiç giriş yapmamış</span>
+                    {% endif %}
+                </p>
+                {% if association.typeCode %}
+                    <p><strong>Tür Kodu:</strong> {{ association.typeCode }}</p>
+                {% endif %}
+                {% if association.typeCodeDescription %}
+                    <p><strong>Tür Açıklaması:</strong> {{ association.typeCodeDescription }}</p>
+                {% endif %}
+                {% if association.subTypeCode %}
+                    <p><strong>Alt Tür Kodu:</strong> {{ association.subTypeCode }}</p>
+                {% endif %}
+                {% if association.subTypeCodeDescription %}
+                    <p><strong>Alt Tür Açıklaması:</strong> {{ association.subTypeCodeDescription }}</p>
+                {% endif %}
+                {% if association.oldLegalEntityNumber %}
+                    <p><strong>Eski Tüzel No:</strong> {{ association.oldLegalEntityNumber }}</p>
+                {% endif %}
+                {% if association.newLegalEntityNumber %}
+                    <p><strong>Yeni Tüzel No:</strong> {{ association.newLegalEntityNumber }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">İstatistikler</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body text-center">
+                                <h3>{{ members|length }}</h3>
+                                <p class="mb-0">Toplam Üye</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-success text-white">
+                            <div class="card-body text-center">
+                                <h3>{{ receipts|length }}</h3>
+                                <p class="mb-0">Toplam Makbuz</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Üyeler ({{ members|length }} kişi)</h5>
+            </div>
+            <div class="card-body">
+                {% if members %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Kimlik No</th>
+                                <th>Ad Soyad</th>
+                                <th>Telefon</th>
+                                <th>GSM</th>
+                                <th>Üyelik Yılı</th>
+                                <th>Makbuz Sayısı</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td>
+                                    <strong>{{ member.identityNumber }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ member.nationality }}</small>
+                                </td>
+                                <td>
+                                    <strong>{{ member.firstName }} {{ member.lastName }}</strong>
+                                    {% if member.middleName %}
+                                        <br>
+                                        <small class="text-muted">{{ member.middleName }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if member.phoneNumber %}
+                                        {{ member.phoneNumber }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if member.gsm.number != '0000000' %}
+                                        {{ member.gsm.countryCode }}{{ member.gsm.operatorCode }}{{ member.gsm.number }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ member.membershipYear }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">0</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Bu derneğin henüz üyesi bulunmuyor</h5>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Makbuzlar ({{ receipts|length }} adet)</h5>
+            </div>
+            <div class="card-body">
+                {% if receipts %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Makbuz ID</th>
+                                <th>Üye ID</th>
+                                <th>Dosya Adı</th>
+                                <th>Yükleme Tarihi</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for receipt in receipts %}
+                            <tr>
+                                <td>{{ receipt.id[:8] }}...</td>
+                                <td>{{ receipt.memberId[:8] }}...</td>
+                                <td>{{ receipt.uploadPath.split('/')[-1] }}</td>
+                                <td>{{ receipt.uploadDate|datetime }}</td>
+                                <td>
+                                    <a href="{{ url_for('static', filename=receipt.uploadPath) }}"
+                                       class="btn btn-sm btn-outline-primary" target="_blank">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-receipt fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Bu derneğin henüz makbuzu bulunmuyor</h5>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,962 @@
+[
+    {
+        "ID": "77555871-5557-4692-9570-53aa51b5ea71",
+        "ISIM": "ZÜMRÜTKÖY AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "83",
+        "E_TUZEL_NUMARASI": "83"
+    },
+    {
+        "ID": "304db21f-678f-4d1a-9ec4-9ee6681694ac",
+        "ISIM": "YILMAZKÖY Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "77",
+        "E_TUZEL_NUMARASI": "77"
+    },
+    {
+        "ID": "8dc7df50-53c1-4652-9479-102cfa5e6fc6",
+        "ISIM": "YILDIRIM AVCILIK ATICILIK BİRLİĞİ DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "84",
+        "E_TUZEL_NUMARASI": "84"
+    },
+    {
+        "ID": "bad0f80b-3709-4573-bd1f-1e40cbae3ea9",
+        "ISIM": "YENİŞEHİR AVCILIK VE ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "96",
+        "E_TUZEL_NUMARASI": "96"
+    },
+    {
+        "ID": "261ddf30-9241-4113-9697-b025733feacf",
+        "ISIM": "YENİCEKÖY-ÇKRV. Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "75",
+        "E_TUZEL_NUMARASI": "75"
+    },
+    {
+        "ID": "da41d930-c69e-4612-9fc6-ed7261e11a21",
+        "ISIM": "YENİBOĞAZİÇİ Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "74",
+        "E_TUZEL_NUMARASI": "74"
+    },
+    {
+        "ID": "33ba9113-82ed-432c-ad1b-973ebd6bb8d9",
+        "ISIM": "YENİ ERENKÖY Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "73",
+        "E_TUZEL_NUMARASI": "73"
+    },
+    {
+        "ID": "1858ae06-9c86-47d8-84aa-458523eeef2d",
+        "ISIM": "YEDİKONUK AVCILIK ATICILIK VE BALIKÇILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "97",
+        "E_TUZEL_NUMARASI": "97"
+    },
+    {
+        "ID": "ad396021-5a7f-4708-8c28-de25111bb0cb",
+        "ISIM": "YEDİDALGA-DENİZLİ Av. At. Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "76",
+        "E_TUZEL_NUMARASI": "76"
+    },
+    {
+        "ID": "720ed2d3-a29a-461c-a05f-7148249d663f",
+        "ISIM": "YAYLA Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "72",
+        "E_TUZEL_NUMARASI": "72"
+    },
+    {
+        "ID": "4a2a9531-cbba-4173-a276-b815f1a15742",
+        "ISIM": "VADİLİ AV.AT.Brlğ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "71",
+        "E_TUZEL_NUMARASI": "71"
+    },
+    {
+        "ID": "7bb82348-67f7-4643-994f-6520a1a7797d",
+        "ISIM": "USTA AVCILAR BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "70",
+        "E_TUZEL_NUMARASI": "70"
+    },
+    {
+        "ID": "9434fad2-c1af-45c5-82bb-628083d7d492",
+        "ISIM": "TÜRKMENKÖY AVCILIK VE ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "86",
+        "E_TUZEL_NUMARASI": "86"
+    },
+    {
+        "ID": "61d91cde-bb95-4def-8669-981ec6c468d4",
+        "ISIM": "Tuzla Avcılar Birliği Spor Kulübü  ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "65",
+        "E_TUZEL_NUMARASI": "65"
+    },
+    {
+        "ID": "ccb730cd-89e1-4e56-a481-adaba6cec3b9",
+        "ISIM": "TOPÇUKÖY AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "67",
+        "E_TUZEL_NUMARASI": "67"
+    },
+    {
+        "ID": "87ae0601-7239-419e-8ee6-1584970b4dd0",
+        "ISIM": "TEPEBAŞI Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "66",
+        "E_TUZEL_NUMARASI": "66"
+    },
+    {
+        "ID": "a9d123e2-0159-4ace-a69b-eeee86a62928",
+        "ISIM": "TAŞKENT AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "64",
+        "E_TUZEL_NUMARASI": "64"
+    },
+    {
+        "ID": "79de19cd-c7bf-4dd4-956c-8eddd157dcdd",
+        "ISIM": "ŞİRİNEVLER AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "69",
+        "E_TUZEL_NUMARASI": "69"
+    },
+    {
+        "ID": "dc162bfe-2380-4a2c-bdbc-7ab5579fdd1a",
+        "ISIM": "ŞAHİNLER AV.AT. Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "68",
+        "E_TUZEL_NUMARASI": "68"
+    },
+    {
+        "ID": "ef314663-6f6a-4355-a3d6-e0fd78a1d86c",
+        "ISIM": "SÜTLÜCE AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "63",
+        "E_TUZEL_NUMARASI": "63"
+    },
+    {
+        "ID": "e325216c-2ed4-4382-a125-767293399972",
+        "ISIM": "SERKAN YALÇIN AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "62",
+        "E_TUZEL_NUMARASI": "62"
+    },
+    {
+        "ID": "704071c6-fe64-4869-aa33-1e592a7b7134",
+        "ISIM": "Serhatköy Avcılar Bir. Derneği ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "61",
+        "E_TUZEL_NUMARASI": "61"
+    },
+    {
+        "ID": "f62ead95-d18d-4870-a27e-81c4297082f7",
+        "ISIM": "SERDARLI Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "60",
+        "E_TUZEL_NUMARASI": "60"
+    },
+    {
+        "ID": "8531b9aa-bb6e-43a6-9e48-03bb3a6ca166",
+        "ISIM": "PİLE Av.At.Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "59",
+        "E_TUZEL_NUMARASI": "59"
+    },
+    {
+        "ID": "ad7dcdc6-39af-4f45-a2be-22250b621438",
+        "ISIM": "PINARLI Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "58",
+        "E_TUZEL_NUMARASI": "58"
+    },
+    {
+        "ID": "2001cce3-73d7-4b2e-9349-ad7ce7a0dffd",
+        "ISIM": "PINARBAŞI AV. AT. Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "57",
+        "E_TUZEL_NUMARASI": "57"
+    },
+    {
+        "ID": "aca60960-403a-4b27-a646-3567d8d88147",
+        "ISIM": "PAŞAKÖY AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "56",
+        "E_TUZEL_NUMARASI": "56"
+    },
+    {
+        "ID": "42685f1b-c03f-49fa-a6d0-e4b3989258b5",
+        "ISIM": "ÖTÜKEN AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "55",
+        "E_TUZEL_NUMARASI": "55"
+    },
+    {
+        "ID": "e93856b6-3ff9-4e14-81b4-e6ec8f11e041",
+        "ISIM": "NERGİSLİ Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "54",
+        "E_TUZEL_NUMARASI": "54"
+    },
+    {
+        "ID": "058b892e-577a-4117-9f2c-f2a4742cc434",
+        "ISIM": "MUTLUYAKA HİLAL AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "51",
+        "E_TUZEL_NUMARASI": "51"
+    },
+    {
+        "ID": "fc5e6cd0-9f26-4f92-b325-0db72fd5f354",
+        "ISIM": "MORMENEKŞE AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "89",
+        "E_TUZEL_NUMARASI": "89"
+    },
+    {
+        "ID": "2209fa43-9511-4c5a-baba-966a287812ac",
+        "ISIM": "MİNARELİKÖY AV. AT. BRİLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "53",
+        "E_TUZEL_NUMARASI": "53"
+    },
+    {
+        "ID": "551697cb-bc9d-446c-b941-bcc9a59752a0",
+        "ISIM": "MEVLEVİ-İKİDERE AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "88",
+        "E_TUZEL_NUMARASI": "88"
+    },
+    {
+        "ID": "25142a2b-3426-486a-9f71-7bb6c3e5a5e5",
+        "ISIM": "MEHMETCİK Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "50",
+        "E_TUZEL_NUMARASI": "50"
+    },
+    {
+        "ID": "203b9d57-fe35-4e19-a3fb-976cca257204",
+        "ISIM": "MARAŞ AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "52",
+        "E_TUZEL_NUMARASI": "52"
+    },
+    {
+        "ID": "0c70c192-080b-4214-ad4a-8fb5b566244f",
+        "ISIM": "LEFKOŞA Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "49",
+        "E_TUZEL_NUMARASI": "49"
+    },
+    {
+        "ID": "f2ddf065-30d5-40ca-bc6e-541ee3cc940d",
+        "ISIM": "LEFKE Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "48",
+        "E_TUZEL_NUMARASI": "48"
+    },
+    {
+        "ID": "84208f67-caf0-4eb7-9693-c68a353318a2",
+        "ISIM": "KUMYALI Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "47",
+        "E_TUZEL_NUMARASI": "47"
+    },
+    {
+        "ID": "0c599dc3-a752-4818-a030-675c4fb863fe",
+        "ISIM": "KOZAN AVCILIK ATICILIK BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "81",
+        "E_TUZEL_NUMARASI": "81"
+    },
+    {
+        "ID": "3b1a57fc-6736-495e-823e-03829b827b30",
+        "ISIM": "KKTC BEŞPARMAK AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "94",
+        "E_TUZEL_NUMARASI": "94"
+    },
+    {
+        "ID": "57efe28b-4003-4347-9017-28eab6adf71b",
+        "ISIM": "KKTC BELLAPAIS AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "93",
+        "E_TUZEL_NUMARASI": "93"
+    },
+    {
+        "ID": "5a67d33d-0444-48f7-a3e1-3405c1ad8db8",
+        "ISIM": "KİLİTKAYA AVCILAR BİRLİĞİ DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "92",
+        "E_TUZEL_NUMARASI": "92"
+    },
+    {
+        "ID": "430c0308-5b8b-4517-b2ad-8f29f59a5428",
+        "ISIM": "KARŞIYAKA Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "45",
+        "E_TUZEL_NUMARASI": "45"
+    },
+    {
+        "ID": "66bcea8c-ec63-463d-b609-e887e48bd511",
+        "ISIM": "KARAOĞLANOĞLU Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "44",
+        "E_TUZEL_NUMARASI": "44"
+    },
+    {
+        "ID": "35974985-3408-4ab4-b13d-e1b33da47d7f",
+        "ISIM": "KALKANLI SPOR KULÜBÜ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "46",
+        "E_TUZEL_NUMARASI": "46"
+    },
+    {
+        "ID": "7d69ef20-9d0b-417e-9603-6c192a5f92e1",
+        "ISIM": "KALKANLI AVCILIK ATICILIK BİRLİĞİ DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "78",
+        "E_TUZEL_NUMARASI": "78"
+    },
+    {
+        "ID": "d865c006-53ed-4146-95e6-47b9c69f6ab7",
+        "ISIM": "İSKELE Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "43",
+        "E_TUZEL_NUMARASI": "43"
+    },
+    {
+        "ID": "21623fe4-4e98-42a7-ad8d-83db03132ea7",
+        "ISIM": "İNÖNÜ AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "42",
+        "E_TUZEL_NUMARASI": "42"
+    },
+    {
+        "ID": "18e15f4c-7082-4476-9d2f-0c5b93337354",
+        "ISIM": "HİSARKÖY KÜLTÜR SPOR DER.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "41",
+        "E_TUZEL_NUMARASI": "41"
+    },
+    {
+        "ID": "9c41d59e-6817-4137-8857-94a5d85a4ee1",
+        "ISIM": "HAMİTKÖY AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "40",
+        "E_TUZEL_NUMARASI": "40"
+    },
+    {
+        "ID": "96dd7e2d-ae6d-4a9e-99e4-111bb46d8e5f",
+        "ISIM": "GÜZELYURT Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "36",
+        "E_TUZEL_NUMARASI": "36"
+    },
+    {
+        "ID": "22d2557e-33f1-4467-b3bc-4e5a333bcbe8",
+        "ISIM": "Güvercinlik Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "39",
+        "E_TUZEL_NUMARASI": "39"
+    },
+    {
+        "ID": "1e4b9b5a-388a-409a-b2d4-c5d141ce2d29",
+        "ISIM": "GÜNEŞKÖY Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "37",
+        "E_TUZEL_NUMARASI": "37"
+    },
+    {
+        "ID": "c3a9ecff-2f30-4cab-b24f-7370f108a0cf",
+        "ISIM": "GÖRNEÇ AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "80",
+        "E_TUZEL_NUMARASI": "80"
+    },
+    {
+        "ID": "d90b0551-c88c-4857-9d5b-e72b0738d38f",
+        "ISIM": "GÖNYELİ Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "35",
+        "E_TUZEL_NUMARASI": "35"
+    },
+    {
+        "ID": "07568b30-bdfd-46cd-920e-4069403d0124",
+        "ISIM": "Gönendere Şehit Salih Kulle Spor Der.  ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "38",
+        "E_TUZEL_NUMARASI": "38"
+    },
+    {
+        "ID": "44befaad-e0fe-4621-a4c4-aaca06b980a5",
+        "ISIM": "GÖÇMENKÖY Av. At. Brlğ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "34",
+        "E_TUZEL_NUMARASI": "34"
+    },
+    {
+        "ID": "544b9cb3-a41c-455c-8e29-6d5101a916bc",
+        "ISIM": "GİRNE Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "33",
+        "E_TUZEL_NUMARASI": "33"
+    },
+    {
+        "ID": "2c743a09-bcce-428c-b28a-a31ed5000eaa",
+        "ISIM": "GENÇ LAPTA AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "82",
+        "E_TUZEL_NUMARASI": "82"
+    },
+    {
+        "ID": "dcdf21e3-7e76-4825-bf6f-25911a79c435",
+        "ISIM": "GEÇİTKALE Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "32",
+        "E_TUZEL_NUMARASI": "32"
+    },
+    {
+        "ID": "0698de2b-9f5f-4484-ab48-d096da5257cf",
+        "ISIM": "GAZİVEREN AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "31",
+        "E_TUZEL_NUMARASI": "31"
+    },
+    {
+        "ID": "455cc0ea-f699-4b39-bb29-4966f1b0abff",
+        "ISIM": "GAZİMAĞUSA Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "30",
+        "E_TUZEL_NUMARASI": "30"
+    },
+    {
+        "ID": "bf463cb9-95f2-40c8-9e16-6cd9183a1eab",
+        "ISIM": "GAZİKÖY Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "29",
+        "E_TUZEL_NUMARASI": "29"
+    },
+    {
+        "ID": "8529c75e-55a8-42cd-8b4b-a6fab3502c54",
+        "ISIM": "ESENTEPE AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "28",
+        "E_TUZEL_NUMARASI": "28"
+    },
+    {
+        "ID": "ee70698f-90b4-4490-8123-c0ea0baab173",
+        "ISIM": "ERSİNLER AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "25",
+        "E_TUZEL_NUMARASI": "25"
+    },
+    {
+        "ID": "ddea61c3-039a-4e22-8843-9606f5b55a7a",
+        "ISIM": "ERGENEKON AV. AT. DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "27",
+        "E_TUZEL_NUMARASI": "27"
+    },
+    {
+        "ID": "8cb6c4bd-4d34-425f-9382-a8f4e433bb38",
+        "ISIM": "ERGAZİ AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "26",
+        "E_TUZEL_NUMARASI": "26"
+    },
+    {
+        "ID": "13f4129b-00d4-4321-ac76-0a4a2e8636f4",
+        "ISIM": "DÜZOVA AV. AT. Brlğ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "24",
+        "E_TUZEL_NUMARASI": "24"
+    },
+    {
+        "ID": "1fbfd772-35a6-42fb-aab3-72deab92ce4a",
+        "ISIM": "DOĞANCI Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "23",
+        "E_TUZEL_NUMARASI": "23"
+    },
+    {
+        "ID": "e6aa34ee-f582-475c-b926-f6dbeab9b129",
+        "ISIM": "DİPKARPAZ Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "20",
+        "E_TUZEL_NUMARASI": "20"
+    },
+    {
+        "ID": "6a161a82-614a-4f5a-bffd-b3ed6799b599",
+        "ISIM": "DİLEKKAYA AV. AT. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "22",
+        "E_TUZEL_NUMARASI": "22"
+    },
+    {
+        "ID": "38181da5-6def-4889-aa62-6cfb779b5754",
+        "ISIM": "DİKMEN GENÇ Av.At. BİRLİĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "21",
+        "E_TUZEL_NUMARASI": "21"
+    },
+    {
+        "ID": "ef271eb2-e40c-45b5-b448-aa5cf2318f19",
+        "ISIM": "DEĞİRMENLİK Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "19",
+        "E_TUZEL_NUMARASI": "19"
+    },
+    {
+        "ID": "1596a03d-9c10-4227-8e53-cd215ab7d381",
+        "ISIM": "DAĞYOLU AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "85",
+        "E_TUZEL_NUMARASI": "85"
+    },
+    {
+        "ID": "8134978e-337d-47f9-ab05-a0d596bed18f",
+        "ISIM": "ÇAYÖNÜ AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "95",
+        "E_TUZEL_NUMARASI": "95"
+    },
+    {
+        "ID": "53e0cc51-924f-4502-8e96-a65ebc7fc8f7",
+        "ISIM": "Çayırova Av. At Bir",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "17",
+        "E_TUZEL_NUMARASI": "17"
+    },
+    {
+        "ID": "747f9cbb-1596-4c42-bc73-98f6094ec03c",
+        "ISIM": "ÇATALKÖY Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "16",
+        "E_TUZEL_NUMARASI": "16"
+    },
+    {
+        "ID": "73c871c4-83c9-41e9-adc2-c4bbc78b6804",
+        "ISIM": "ÇAMLIBEL Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "18",
+        "E_TUZEL_NUMARASI": "18"
+    },
+    {
+        "ID": "b648b397-fed1-416f-8df6-ed0b7f48bf16",
+        "ISIM": "CİHANGİR Av. At. Birlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "15",
+        "E_TUZEL_NUMARASI": "15"
+    },
+    {
+        "ID": "21ca67ad-c081-4381-81cc-09d13a6db098",
+        "ISIM": "BÜYÜKKONUK Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "14",
+        "E_TUZEL_NUMARASI": "14"
+    },
+    {
+        "ID": "2e67b555-d8df-4466-814a-0b17f09f2411",
+        "ISIM": "BOSTANCI  Av. At. Bir.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "13",
+        "E_TUZEL_NUMARASI": "13"
+    },
+    {
+        "ID": "5ff8da4a-78ef-4b12-b6b4-5ca5aa9e9920",
+        "ISIM": "BOĞAZTEPE Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "12",
+        "E_TUZEL_NUMARASI": "12"
+    },
+    {
+        "ID": "023a3f43-7b96-4e95-8846-95ef72718b36",
+        "ISIM": "BOĞAZİÇİ (LAPATHOS) Av.At.Brlğ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "11",
+        "E_TUZEL_NUMARASI": "11"
+    },
+    {
+        "ID": "817b49c8-40d7-43d4-863f-24e370a5da9a",
+        "ISIM": "BEYARMUDU Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "10",
+        "E_TUZEL_NUMARASI": "10"
+    },
+    {
+        "ID": "6e1da39e-4256-474f-88ef-3f3a77c6e1fd",
+        "ISIM": "BALIKESİR AV. AT. Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "9",
+        "E_TUZEL_NUMARASI": "9"
+    },
+    {
+        "ID": "fa8bd0ac-3fc1-415b-83ef-552081ca95f9",
+        "ISIM": "AYDINKÖY Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "8",
+        "E_TUZEL_NUMARASI": "8"
+    },
+    {
+        "ID": "48271aef-8cc5-40b9-87a3-85a763128f7f",
+        "ISIM": "AVDAŞ Av. At. Derneği  ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "6",
+        "E_TUZEL_NUMARASI": "6"
+    },
+    {
+        "ID": "61b5475a-1024-41de-a19a-279eb663afc9",
+        "ISIM": "ASLANKÖY Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "5",
+        "E_TUZEL_NUMARASI": "5"
+    },
+    {
+        "ID": "21aa39fb-6d9a-47ed-ad6a-6cf7d93a7863",
+        "ISIM": "ALSANCAK AV. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "4",
+        "E_TUZEL_NUMARASI": "4"
+    },
+    {
+        "ID": "7b36b1a6-b191-4d4b-bfb4-ccbb61f5ed2e",
+        "ISIM": "ALPAY KAMBURCA AKÇAY AVCILIK ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "79",
+        "E_TUZEL_NUMARASI": "79"
+    },
+    {
+        "ID": "b76423c7-5a2a-4723-9983-284c0360c2e7",
+        "ISIM": "ALAYKÖY Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "2",
+        "E_TUZEL_NUMARASI": "2"
+    },
+    {
+        "ID": "13ccec40-c677-4c31-b602-dd737bd62c08",
+        "ISIM": "AKOVA Av. At. Birliği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "3",
+        "E_TUZEL_NUMARASI": "3"
+    },
+    {
+        "ID": "92246ae9-ce77-4c34-9fe9-804188adfdb0",
+        "ISIM": "AKDOĞAN DOĞA AVCILIK VE ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "87",
+        "E_TUZEL_NUMARASI": "87"
+    },
+    {
+        "ID": "aa6ffc79-b75a-4fdb-a1ca-6e83f437abbd",
+        "ISIM": "AKDENİZ AVCILIK VE ATICILIK DERNEĞİ",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "91",
+        "E_TUZEL_NUMARASI": "91"
+    },
+    {
+        "ID": "afc7c1e0-7410-469a-bf35-1fedc4389a6d",
+        "ISIM": "AĞIRDAĞ-BOĞAZ Av.At.Brlğ.",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "1",
+        "E_TUZEL_NUMARASI": "1"
+    },
+    {
+        "ID": "7a76a073-2235-4461-b570-7961299bfcc6",
+        "ISIM": "Ağıllar - Altınova Av. ve At. Bir. Derneği",
+        "TUZEL_TUR_KOD": "DERNEK",
+        "TUZEL_TUR_KOD_TANIM": "Dernek",
+        "TUZEL_TIP_KOD": "AVCILIK_ATICILIK",
+        "TUZEL_TIP_KOD_TANIM": "Avcılık Atıcılık Derneği",
+        "ESKI_TUZEL_NUMARASI": "7",
+        "E_TUZEL_NUMARASI": "7"
+    }
+]

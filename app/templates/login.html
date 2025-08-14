@@ -1,0 +1,156 @@
+{% extends "layout.html" %}
+
+{% block title %}Giriş - DernekKapı{% endblock %}
+
+{% block auth_content %}
+<style>
+    .login-container {
+        min-height: 100vh;
+        background-color: #f9fafb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }
+
+    .login-card {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        max-width: 380px;
+        width: 100%;
+    }
+
+    .login-header {
+        background-color: #1e3a8a;
+        color: white;
+        padding: 24px 20px 20px;
+        text-align: center;
+        border-radius: 6px 6px 0 0;
+    }
+
+    .login-header h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .login-header p {
+        margin: 6px 0 0;
+        opacity: 0.9;
+        font-size: 0.9rem;
+    }
+
+    .login-body {
+        padding: 24px 20px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #374151;
+        font-size: 0.9rem;
+    }
+
+    .form-control, .form-select {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+        transition: all 0.15s ease;
+        background-color: #ffffff;
+    }
+
+    .form-control:focus, .form-select:focus {
+        outline: none;
+        border-color: #1e3a8a;
+        box-shadow: 0 0 0 1px rgba(30, 58, 138, 0.1);
+    }
+
+    .login-btn {
+        background-color: #1e3a8a;
+        border: 1px solid #1e3a8a;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: white;
+        width: 100%;
+        transition: all 0.15s ease;
+        cursor: pointer;
+    }
+
+    .login-btn:hover {
+        background-color: #1e40af;
+        border-color: #1e40af;
+    }
+
+    .login-footer {
+        background-color: #f9fafb;
+        padding: 12px 20px;
+        text-align: center;
+        border-top: 1px solid #d1d5db;
+        border-radius: 0 0 6px 6px;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <img src="{{ url_for('static', filename='assets/dernekkapı-transparent-1200x500.png') }}" alt="DernekKapı Logo" style="max-width: 100%; height: auto; max-height: 80px;">
+        </div>
+
+        <div class="login-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                            <i class="fas fa-{{ 'exclamation-triangle' if category == 'error' else 'check-circle' if category == 'success' else 'info-circle' }} me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="form-group">
+                    <label for="user_type" class="form-label">Giriş Türü</label>
+                    <select class="form-select" id="user_type" name="user_type" required>
+                        <option value="admin">Yönetim (AVFED)</option>
+                        <option value="association">Dernek</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="username" class="form-label">Kullanıcı Adı</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Şifre</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Giriş Yap
+                </button>
+            </form>
+        </div>
+
+        <div class="login-footer">
+            <small class="text-muted">
+                <i class="fas fa-shield-alt me-1"></i>
+                Güvenli bağlantı ile korunmaktadır
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}

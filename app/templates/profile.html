@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}Profil - DernekKapı{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dernek Profili</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Dernek Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Dernek Adı:</strong> {{ association_name }}</p>
+                        <p><strong>Kullanıcı Adı:</strong> {{ session.username }}</p>
+                        <p><strong>Son Giriş:</strong> {{ session.get('last_login', 'Bilinmiyor') }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Üyelik Durumu:</strong> <span class="badge bg-success">Aktif</span></p>
+                        <p><strong>Kayıt Tarihi:</strong> {{ session.get('created_date', 'Bilinmiyor') }}</p>
+                        <p><strong>Son Güncelleme:</strong> {{ session.get('updated_date', 'Bilinmiyor') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Hızlı İşlemler</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('members.create') }}" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Yeni Üye Ekle
+                    </a>
+                    <a href="{{ url_for('members.list') }}" class="btn btn-info">
+                        <i class="fas fa-users me-2"></i>
+                        Üyeleri Görüntüle
+                    </a>
+                    <a href="{{ url_for('members.export_excel') }}" class="btn btn-success">
+                        <i class="fas fa-file-excel me-2"></i>
+                        Excel'e Aktar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Sistem Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Teknik Bilgiler</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Uygulama Versiyonu:</strong> 1.0.0</li>
+                            <li><strong>Veritabanı:</strong> SQLite</li>
+                            <li><strong>Framework:</strong> Flask</li>
+                            <li><strong>Python Versiyonu:</strong> 3.8+</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Teknik Destek</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>E-posta:</strong> <a href="mailto:customer@cengel.studio">customer@cengel.studio</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

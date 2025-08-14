@@ -1,0 +1,258 @@
+{% extends "layout.html" %}
+
+{% block title %}Üye Listesi - DernekKapı{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>
+                <i class="fas fa-users text-primary me-3"></i>
+                Üye Listesi
+            </h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('dashboard.index') }}">Ana Sayfa</a></li>
+                    <li class="breadcrumb-item active">Üyeler</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="btn-toolbar">
+            <div class="btn-group me-2">
+                <a href="{{ url_for('members.export_csv') }}" class="btn btn-outline-success">
+                    <i class="fas fa-file-csv me-2"></i>
+                    CSV
+                </a>
+                <a href="{{ url_for('members.export_excel') }}" class="btn btn-outline-success">
+                    <i class="fas fa-file-excel me-2"></i>
+                    Excel
+                </a>
+            </div>
+            <a href="{{ url_for('members.create') }}" class="btn btn-primary">
+                <i class="fas fa-user-plus me-2"></i>
+                Yeni Üye
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Summary -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="stats-card primary">
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stats-number">{{ members|length }}</div>
+            <div class="stats-label">Toplam Üye</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="stats-card success">
+            <div class="icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('membershipYear', 'equalto', current_year|string)|list|length }}</div>
+            <div class="stats-label">Bu Yıl</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="stats-card info">
+            <div class="icon">
+                <i class="fas fa-phone"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('phoneNumber', 'ne', '')|list|length }}</div>
+            <div class="stats-label">Telefon</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="stats-card warning">
+            <div class="icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('gsm.number', 'ne', '0000000')|list|length }}</div>
+            <div class="stats-label">GSM</div>
+        </div>
+    </div>
+</div>
+
+<!-- Search and Filter -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Üye ara...">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="yearFilter">
+                            <option value="">Tüm Yıllar</option>
+                            {% for year in range(2020, current_year + 1) %}
+                                <option value="{{ year }}">{{ year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
+                            <i class="fas fa-times me-2"></i>
+                            Filtreleri Temizle
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Members Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-table me-2"></i>
+                    Üyeler ({{ members|length }} kişi)
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if members %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Kimlik No</th>
+                                <th>Ad Soyad</th>
+                                <th>Telefon</th>
+                                <th>GSM</th>
+                                <th>Üyelik Yılı</th>
+                                <th>Makbuz</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member in members %}
+                            <tr>
+                                <td>
+                                    <strong>{{ member.identityNumber }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ member.nationality }}</small>
+                                </td>
+                                <td>
+                                    <strong>{{ member.firstName }} {{ member.lastName }}</strong>
+                                    {% if member.middleName %}
+                                        <br>
+                                        <small class="text-muted">{{ member.middleName }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if member.phoneNumber %}
+                                        <i class="fas fa-phone text-success me-1"></i>
+                                        {{ member.phoneNumber }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if member.gsm.number != '0000000' %}
+                                        <i class="fas fa-mobile-alt text-info me-1"></i>
+                                        {{ member.gsm.countryCode }}{{ member.gsm.operatorCode }}{{ member.gsm.number }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">{{ member.membershipYear }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">0</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ url_for('members.detail', member_id=member.id) }}"
+                                           class="btn btn-sm btn-outline-primary" title="Detaylar">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-outline-info"
+                                                onclick="showMemberDetails('{{ member.id }}')" title="Bilgiler">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-users fa-4x text-muted mb-4"></i>
+                    <h4 class="text-muted mb-3">Henüz üye bulunmuyor</h4>
+                    <p class="text-muted mb-4">İlk üyenizi ekleyerek başlayın</p>
+                    <a href="{{ url_for('members.create') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>
+                        İlk Üyeyi Ekle
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const yearFilter = document.getElementById('yearFilter');
+    const tableRows = document.querySelectorAll('tbody tr');
+
+    function filterMembers() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedYear = yearFilter.value;
+
+        tableRows.forEach(row => {
+            const name = row.cells[1].textContent.toLowerCase();
+            const year = row.cells[4].textContent.trim();
+            const phone = row.cells[2].textContent.toLowerCase();
+            const gsm = row.cells[3].textContent.toLowerCase();
+
+            const matchesSearch = name.includes(searchTerm) ||
+                                phone.includes(searchTerm) ||
+                                gsm.includes(searchTerm);
+            const matchesYear = !selectedYear || year === selectedYear;
+
+            if (matchesSearch && matchesYear) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', filterMembers);
+    yearFilter.addEventListener('change', filterMembers);
+
+    // Clear filters
+    window.clearFilters = function() {
+        searchInput.value = '';
+        yearFilter.value = '';
+        tableRows.forEach(row => {
+            row.style.display = '';
+        });
+    };
+});
+
+function showMemberDetails(memberId) {
+    // Placeholder for member details modal
+    alert('Üye detayları yakında eklenecek!');
+}
+</script>
+{% endblock %}

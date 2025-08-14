@@ -1,0 +1,180 @@
+{% extends "layout.html" %}
+
+{% block title %}Üye Detayı - DernekKapı{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ member.firstName }} {{ member.lastName }}</h1>
+    <a href="{{ url_for('members.list') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>
+        Geri Dön
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Üye Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Kimlik Bilgileri</h6>
+                        <p><strong>Kimlik No:</strong> {{ member.identityNumber }}</p>
+                        <p><strong>Uyruk:</strong> {{ member.nationality }}</p>
+                        <p><strong>Ad:</strong> {{ member.firstName }}</p>
+                        <p><strong>Soyad:</strong> {{ member.lastName }}</p>
+                        {% if member.middleName %}
+                            <p><strong>İkinci Ad:</strong> {{ member.middleName }}</p>
+                        {% endif %}
+                        {% if member.birthSurname %}
+                            <p><strong>Doğum Soyadı:</strong> {{ member.birthSurname }}</p>
+                        {% endif %}
+                        {% if member.gender %}
+                            <p><strong>Cinsiyet:</strong> {{ member.gender }}</p>
+                        {% endif %}
+                        {% if member.birthDate %}
+                            <p><strong>Doğum Tarihi:</strong> {{ member.birthDate }}</p>
+                        {% endif %}
+                        {% if member.birthPlace %}
+                            <p><strong>Doğum Yeri:</strong> {{ member.birthPlace }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Aile Bilgileri</h6>
+                        {% if member.motherName %}
+                            <p><strong>Anne Adı:</strong> {{ member.motherName }}</p>
+                        {% endif %}
+                        {% if member.fatherName %}
+                            <p><strong>Baba Adı:</strong> {{ member.fatherName }}</p>
+                        {% endif %}
+
+                        <h6 class="mt-3">İletişim Bilgileri</h6>
+                        {% if member.phoneNumber %}
+                            <p><strong>Telefon:</strong> {{ member.phoneNumber }}</p>
+                        {% endif %}
+                        {% if member.gsm.number != '0000000' %}
+                            <p><strong>GSM:</strong> {{ member.gsm.countryCode }}{{ member.gsm.operatorCode }}{{ member.gsm.number }}</p>
+                        {% endif %}
+                        <p><strong>Üyelik Yılı:</strong> {{ member.membershipYear }}</p>
+                    </div>
+                </div>
+
+                {% if member.district or member.neighborhood or member.street %}
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h6>Adres Bilgileri</h6>
+                        <p>
+                            {% if member.district %}{{ member.district }}{% endif %}
+                            {% if member.neighborhood %}/ {{ member.neighborhood }}{% endif %}
+                            {% if member.street %}/ {{ member.street }}{% endif %}
+                            {% if member.buildingNameOrNumber %}/ {{ member.buildingNameOrNumber }}{% endif %}
+                            {% if member.doorNumber %}No: {{ member.doorNumber }}{% endif %}
+                            {% if member.apartmentNumber %}/ {{ member.apartmentNumber }}{% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Makbuz Yükle</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('members.upload_receipt', member_id=member.id) }}">
+                    <div class="mb-3">
+                        <label for="receipt_file" class="form-label">Makbuz Dosyası</label>
+                        <input type="file" class="form-control" id="receipt_file" name="receipt_file" accept="image/*" required>
+                        <div class="form-text">Sadece JPEG, PNG, GIF dosyaları kabul edilir.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-upload me-2"></i>
+                        Makbuz Yükle
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Makbuzlar</h5>
+            </div>
+            <div class="card-body">
+                {% if receipts %}
+                    <div class="list-group list-group-flush">
+                        {% for receipt in receipts %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted">{{ receipt.uploadDate|datetime }}</small>
+                                <br>
+                                <strong>{{ receipt.uploadPath.split('/')[-1] }}</strong>
+                            </div>
+                            <a href="{{ url_for('static', filename=receipt.uploadPath) }}"
+                               class="btn btn-sm btn-outline-primary" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center">Henüz makbuz yüklenmemiş</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">İşlemler</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="#" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-edit me-2"></i>
+                            Düzenle
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#" class="btn btn-outline-info w-100">
+                            <i class="fas fa-print me-2"></i>
+                            Yazdır
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="#" class="btn btn-outline-success w-100">
+                            <i class="fas fa-file-pdf me-2"></i>
+                            PDF İndir
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-outline-danger w-100" onclick="deleteMember('{{ member.id }}')">
+                            <i class="fas fa-trash me-2"></i>
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function deleteMember(memberId) {
+    if (confirm('Bu üyeyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+        // AJAX ile silme işlemi yapılabilir
+        alert('Üye silme işlemi henüz implement edilmedi.');
+    }
+}
+</script>
+{% endblock %}

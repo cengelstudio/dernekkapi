@@ -1,0 +1,144 @@
+{% extends "layout.html" %}
+
+{% block title %}Tüm Üyeler - DernekKapı{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Tüm Üyeler</h1>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>
+        Geri Dön
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Sistem Geneli Üyeler ({{ members|length }} kişi)</h5>
+            </div>
+            <div class="card-body">
+                {% if members %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Kimlik No</th>
+                                <th>Ad Soyad</th>
+                                <th>Dernek</th>
+                                <th>Telefon</th>
+                                <th>GSM</th>
+                                <th>Üyelik Yılı</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for member_data in members %}
+                            <tr>
+                                <td>
+                                    <strong>{{ member_data.member.identityNumber }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ member_data.member.nationality }}</small>
+                                </td>
+                                <td>
+                                    <strong>{{ member_data.member.firstName }} {{ member_data.member.lastName }}</strong>
+                                    {% if member_data.member.middleName %}
+                                        <br>
+                                        <small class="text-muted">{{ member_data.member.middleName }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">{{ member_data.association.name }}</span>
+                                    <br>
+                                    <small class="text-muted">{{ member_data.association.governmentId }}</small>
+                                </td>
+                                <td>
+                                    {% if member_data.member.phoneNumber %}
+                                        {{ member_data.member.phoneNumber }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if member_data.member.gsm.number != '0000000' %}
+                                        {{ member_data.member.gsm.countryCode }}{{ member_data.member.gsm.operatorCode }}{{ member_data.member.gsm.number }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ member_data.member.membershipYear }}</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                                onclick="showMemberDetails('{{ member_data.member.id }}')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-info"
+                                                onclick="showAssociationDetails('{{ member_data.association.id }}')">
+                                            <i class="fas fa-building"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Sistemde henüz üye bulunmuyor</h5>
+                    <p class="text-muted">Dernekler üye ekledikçe burada görünecek</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Member Details Modal -->
+<div class="modal fade" id="memberDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Üye Detayları</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="memberDetailsContent">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Association Details Modal -->
+<div class="modal fade" id="associationDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Dernek Detayları</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="associationDetailsContent">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function showMemberDetails(memberId) {
+    // Bu fonksiyon AJAX ile üye detaylarını yükleyebilir
+    alert('Üye detayları yükleniyor... (Member ID: ' + memberId + ')');
+}
+
+function showAssociationDetails(associationId) {
+    // Bu fonksiyon AJAX ile dernek detaylarını yükleyebilir
+    alert('Dernek detayları yükleniyor... (Association ID: ' + associationId + ')');
+}
+</script>
+{% endblock %}
