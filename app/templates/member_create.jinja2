@@ -1,0 +1,638 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Yeni Üye - DernekKapı{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-control-readonly {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    cursor: not-allowed;
+}
+
+.form-control-readonly:focus {
+    box-shadow: none !important;
+    border-color: #dee2e6 !important;
+}
+
+.badge.bg-secondary {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Yeni Üye Ekle</h1>
+    <a href="{{ url_for('members.list') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>
+        Geri Dön
+    </a>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-user-plus text-primary me-2"></i>
+                    Yeni Üye Ekleme
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Kimlik Numarası Girişi -->
+                <div id="identityInputSection" class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-id-card fa-3x text-primary mb-3"></i>
+                        <h4>Kimlik Numarası Girişi</h4>
+                        <p class="text-muted">Üye bilgilerini çekmek için kimlik numarasını giriniz</p>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control form-control-lg" id="identityNumberInput"
+                                       placeholder="Kimlik numarasını giriniz" required>
+                                <button class="btn btn-primary btn-lg" type="button" id="startMemberCreationBtn">
+                                    <i class="fas fa-arrow-right me-2"></i>
+                                    Başla
+                                </button>
+                            </div>
+                            <div id="fetchStatusMain" class="d-none mt-3">
+                                <div class="alert alert-info">
+                                    <div class="d-flex align-items-center">
+                                        <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                                            <span class="visually-hidden">Yükleniyor...</span>
+                                        </div>
+                                        <div>
+                                            <strong>DernekKapı, İçişleri sistemine giriş yapıyor...</strong>
+                                            <div class="small text-muted mt-1" id="statusMessage">ChromeDriver başlatılıyor...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Üye Formu (Başlangıçta gizli) -->
+                <div id="memberFormSection" class="d-none">
+                    <div class="mb-3">
+                        <h6 class="mb-0">Üye Bilgileri</h6>
+                    </div>
+                    <form method="POST">
+                    <div class="row">
+                        <!-- Kimlik Bilgileri -->
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Kimlik Bilgileri</h6>
+
+                            <div class="mb-3">
+                                <label for="identityNumber" class="form-label">Kimlik Numarası *</label>
+                                <input type="text" class="form-control" id="identityNumber" name="identityNumber" required maxlength="11">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nationality" class="form-label">Uyruk</label>
+                                <select class="form-select" id="nationality" name="nationality">
+                                    <option value="KT" selected>KT</option>
+                                    <option value="TC">TC</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="firstName" class="form-label">Ad *</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="lastName" class="form-label">Soyad *</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="middleName" class="form-label">İkinci Ad</label>
+                                <input type="text" class="form-control" id="middleName" name="middleName">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="birthSurname" class="form-label">Doğum Soyadı</label>
+                                <input type="text" class="form-control" id="birthSurname" name="birthSurname">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">Cinsiyet</label>
+                                        <select class="form-select" id="gender" name="gender">
+                                            <option value="">Seçiniz</option>
+                                            <option value="Erkek">Erkek</option>
+                                            <option value="Kadın">Kadın</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="birthDate" class="form-label">Doğum Tarihi</label>
+                                        <input type="date" class="form-control" id="birthDate" name="birthDate">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="birthPlace" class="form-label">Doğum Yeri</label>
+                                <input type="text" class="form-control" id="birthPlace" name="birthPlace">
+                            </div>
+                        </div>
+
+                        <!-- Aile Bilgileri -->
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Aile Bilgileri</h6>
+
+                            <div class="mb-3">
+                                <label for="motherName" class="form-label">Anne Adı</label>
+                                <input type="text" class="form-control" id="motherName" name="motherName">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fatherName" class="form-label">Baba Adı</label>
+                                <input type="text" class="form-control" id="fatherName" name="fatherName">
+                            </div>
+
+                            <h6 class="mb-3 mt-4">Adres Bilgileri</h6>
+
+                            <div class="mb-3">
+                                <label for="district" class="form-label">İlçe</label>
+                                <select class="form-select" id="district" name="district">
+                                    <option value="">İlçe seçiniz</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="neighborhood" class="form-label">Mahalle/Köy</label>
+                                <input type="text" class="form-control" id="neighborhood" name="neighborhood">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="street" class="form-label">Cadde/Sokak</label>
+                                <input type="text" class="form-control" id="street" name="street">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="buildingNameOrNumber" class="form-label">Bina</label>
+                                        <input type="text" class="form-control" id="buildingNameOrNumber" name="buildingNameOrNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="doorNumber" class="form-label">Dış Kapı No</label>
+                                        <input type="text" class="form-control" id="doorNumber" name="doorNumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="apartmentNumber" class="form-label">İç Kapı No</label>
+                                        <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="mb-3">İletişim Bilgileri</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Telefon Numarası</label>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="0212xxxxxxx">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="membershipYear" class="form-label">Üyelik Yılı</label>
+                                <input type="number" class="form-control" id="membershipYear" name="membershipYear" value="{{ current_year }}" min="1900" max="2100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="mb-3">GSM Bilgileri</h6>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="gsmCountryCode" class="form-label">Ülke Kodu</label>
+                                <input type="text" class="form-control" id="gsmCountryCode" name="gsmCountryCode" value="+90" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="gsmOperatorCode" class="form-label">Operatör</label>
+                                <select class="form-select" id="gsmOperatorCode" name="gsmOperatorCode">
+                                    <option value="533">533</option>
+                                    <option value="534">534</option>
+                                    <option value="535">535</option>
+                                    <option value="536">536</option>
+                                    <option value="537">537</option>
+                                    <option value="538">538</option>
+                                    <option value="539">539</option>
+                                    <option value="540">540</option>
+                                    <option value="541">541</option>
+                                    <option value="542">542</option>
+                                    <option value="543">543</option>
+                                    <option value="544">544</option>
+                                    <option value="545">545</option>
+                                    <option value="546">546</option>
+                                    <option value="547">547</option>
+                                    <option value="548">548</option>
+                                    <option value="549">549</option>
+                                    <option value="555">555</option>
+                                    <option value="556">556</option>
+                                    <option value="557">557</option>
+                                    <option value="558">558</option>
+                                    <option value="559">559</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="gsmNumber" class="form-label">GSM Numarası</label>
+                                <input type="text" class="form-control" id="gsmNumber" name="gsmNumber" placeholder="0000000" maxlength="7">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary btn-lg" id="saveMemberBtn">
+                            <i class="fas fa-save me-2"></i>
+                            Üyeyi Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Makbuz Yükleme Modal -->
+<div class="modal fade" id="receiptUploadModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-receipt text-success me-2"></i>
+                    Makbuz Yükleme
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                    <h4>Üye Başarıyla Oluşturuldu!</h4>
+                    <p class="text-muted">Şimdi üye için makbuz yükleyebilir veya daha sonra yükleyebilirsiniz.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card border-success">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-upload me-2"></i>
+                                    Şimdi Makbuz Yükle
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="receiptUploadForm" method="POST" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="receipt_file" class="form-label">Makbuz Dosyası</label>
+                                        <input type="file" class="form-control" id="receipt_file" name="receipt_file" accept="image/*" required>
+                                        <div class="form-text">Sadece JPEG, PNG, GIF dosyaları kabul edilir.</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="fas fa-upload me-2"></i>
+                                        Makbuz Yükle
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card border-info">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-clock me-2"></i>
+                                    Daha Sonra Yükle
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted">Makbuzu daha sonra üye detay sayfasından yükleyebilirsiniz.</p>
+                                <button type="button" class="btn btn-info w-100" onclick="goToMemberList()">
+                                    <i class="fas fa-list me-2"></i>
+                                    Üye Listesine Git
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startMemberCreationBtn = document.getElementById('startMemberCreationBtn');
+    const identityNumberInput = document.getElementById('identityNumberInput');
+    const fetchStatusMain = document.getElementById('fetchStatusMain');
+    const identityInputSection = document.getElementById('identityInputSection');
+    const memberFormSection = document.getElementById('memberFormSection');
+    const memberForm = document.querySelector('form[method="POST"]');
+    const receiptUploadForm = document.getElementById('receiptUploadForm');
+    let createdMemberId = null;
+
+
+
+        // Ana kimlik numarası girişi - Başla butonuna tıklandığında
+        startMemberCreationBtn.addEventListener('click', function() {
+            const identityNumber = identityNumberInput.value.trim();
+            const statusMessage = document.getElementById('statusMessage');
+
+        if (!identityNumber) {
+            alert('Lütfen kimlik numarasını giriniz');
+            return;
+        }
+
+        // Loading durumunu göster
+        fetchStatusMain.classList.remove('d-none');
+        startMemberCreationBtn.disabled = true;
+
+        // Durum mesajlarını güncelle
+        const statusMessages = [
+            'ChromeDriver başlatılıyor...',
+            'İçişleri Bakanlığı sitesine bağlanılıyor...',
+            'Giriş sayfası yükleniyor...',
+            'Kullanıcı adı giriliyor...',
+            'Şifre giriliyor...',
+            'Giriş yapılıyor...',
+            'Giriş işlemi bekleniyor...',
+            'Üye bilgi sayfası yükleniyor...',
+            'Bilgiler çekiliyor...',
+            'İsim bilgisi çekiliyor...',
+            'Soyisim bilgisi çekiliyor...',
+            'Adres bilgileri çekiliyor...',
+            'İletişim bilgileri çekiliyor...',
+            'Tüm bilgiler başarıyla çekildi!'
+        ];
+
+        let messageIndex = 0;
+        const messageInterval = setInterval(() => {
+            if (messageIndex < statusMessages.length) {
+                statusMessage.textContent = statusMessages[messageIndex];
+                messageIndex++;
+            }
+        }, 2000);
+
+        // API'ye istek gönder
+        fetch('{{ url_for("members.fetch_info") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                identity_number: identityNumber
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            clearInterval(messageInterval);
+            if (data.error) {
+                statusMessage.textContent = 'Hata: ' + data.error;
+                setTimeout(() => {
+                    alert('Hata: ' + data.error);
+                }, 1000);
+            } else {
+                statusMessage.textContent = 'Bilgiler başarıyla çekildi! Form dolduruluyor...';
+                setTimeout(() => {
+                    // Form alanlarını doldur
+                    fillFormFields(data);
+
+                    // Kimlik giriş bölümünü gizle, form bölümünü göster
+                    identityInputSection.classList.add('d-none');
+                    memberFormSection.classList.remove('d-none');
+
+                    // Başarı mesajı göster
+                    showSuccessMessage('Bilgiler başarıyla çekildi! Form dolduruldu. Üyeyi kaydettikten sonra onay için bekleyecek.');
+                }, 1000);
+            }
+        })
+        .catch(error => {
+            clearInterval(messageInterval);
+            console.error('Error:', error);
+            statusMessage.textContent = 'Bir hata oluştu. Lütfen tekrar deneyiniz.';
+            setTimeout(() => {
+                alert('Bir hata oluştu. Lütfen tekrar deneyiniz.');
+            }, 1000);
+        })
+        .finally(() => {
+            // Loading durumunu gizle
+            setTimeout(() => {
+                fetchStatusMain.classList.add('d-none');
+                startMemberCreationBtn.disabled = false;
+            }, 2000);
+        });
+    });
+
+    // Form alanlarını doldur
+    function fillFormFields(data) {
+        // Alan bilgilerini ve readonly durumlarını ayarla
+        const fields = [
+            { id: 'identityNumber', value: data.identityNumber || '', readonly: false },
+            { id: 'firstName', value: data.firstName || '', readonly: data.firstName_readonly || false },
+            { id: 'lastName', value: data.lastName || '', readonly: data.lastName_readonly || false },
+            { id: 'middleName', value: data.middleName || '', readonly: data.middleName_readonly || false },
+            { id: 'birthSurname', value: data.birthSurname || '', readonly: data.birthSurname_readonly || false },
+            { id: 'gender', value: data.gender || '', readonly: data.gender_readonly || false },
+            { id: 'birthPlace', value: data.birthPlace || '', readonly: data.birthPlace_readonly || false },
+            { id: 'motherName', value: data.motherName || '', readonly: data.motherName_readonly || false },
+            { id: 'birthDate', value: data.birthDate || '', readonly: data.birthDate_readonly || false },
+            { id: 'fatherName', value: data.fatherName || '', readonly: data.fatherName_readonly || false },
+            { id: 'neighborhood', value: data.neighborhood || '', readonly: data.neighborhood_readonly || false },
+            { id: 'street', value: data.street || '', readonly: data.street_readonly || false },
+            { id: 'buildingNameOrNumber', value: data.buildingNameOrNumber || '', readonly: data.buildingNameOrNumber_readonly || false },
+            { id: 'doorNumber', value: data.doorNumber || '', readonly: data.doorNumber_readonly || false },
+            { id: 'apartmentNumber', value: data.apartmentNumber || '', readonly: data.apartmentNumber_readonly || false },
+            { id: 'phoneNumber', value: data.phoneNumber || '', readonly: data.phoneNumber_readonly || false },
+            { id: 'gsmCountryCode', value: data.gsmCountryCode || '+90', readonly: data.gsmCountryCode_readonly || false },
+            { id: 'gsmOperatorCode', value: data.gsmOperatorCode || '533', readonly: data.gsmOperatorCode_readonly || false },
+            { id: 'gsmNumber', value: data.gsmNumber || '', readonly: data.gsmNumber_readonly || false }
+        ];
+
+        // İlçe select elementini doldur
+        const districtSelect = document.getElementById('district');
+        if (districtSelect && data.district_options) {
+            // Mevcut option'ları temizle (ilk option hariç)
+            districtSelect.innerHTML = '<option value="">İlçe seçiniz</option>';
+
+            // Yeni option'ları ekle
+            data.district_options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.value;
+                optionElement.textContent = option.text;
+                optionElement.setAttribute('data-select2-id', option.id);
+                districtSelect.appendChild(optionElement);
+            });
+
+            // Seçili değeri ayarla
+            if (data.district) {
+                districtSelect.value = data.district;
+            }
+
+            // Readonly durumunu ayarla
+            if (data.district_readonly) {
+                districtSelect.disabled = true;
+                districtSelect.classList.add('form-control-readonly');
+                districtSelect.style.backgroundColor = '#f8f9fa';
+                districtSelect.style.color = '#6c757d';
+
+                // Label'a readonly işareti ekle
+                const label = districtSelect.closest('.mb-3').querySelector('.form-label');
+                if (label) {
+                    label.innerHTML += ' <span class="badge bg-secondary">Düzenlemeye Kapalı</span>';
+                }
+            }
+        }
+
+        fields.forEach(field => {
+            const element = document.getElementById(field.id);
+            if (element) {
+                element.value = field.value;
+
+                if (field.readonly) {
+                    element.setAttribute('readonly', 'readonly');
+                    element.classList.add('form-control-readonly');
+                    element.style.backgroundColor = '#f8f9fa';
+                    element.style.color = '#6c757d';
+
+                    // Label'a readonly işareti ekle
+                    const label = element.closest('.mb-3').querySelector('.form-label');
+                    if (label) {
+                        label.innerHTML += ' <span class="badge bg-secondary">Düzenlemeye Kapalı</span>';
+                    }
+                } else {
+                    element.removeAttribute('readonly');
+                    element.classList.remove('form-control-readonly');
+                    element.style.backgroundColor = '';
+                    element.style.color = '';
+                }
+            }
+        });
+    }
+
+    // Başarı mesajı göster
+    function showSuccessMessage(message) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show';
+        alertDiv.innerHTML = `
+            <i class="fas fa-check-circle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+        const cardBody = document.querySelector('.card-body');
+        cardBody.insertBefore(alertDiv, cardBody.firstChild);
+
+        // 5 saniye sonra mesajı kaldır
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 5000);
+    }
+
+    // Form submit işlemi
+    memberForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Form verilerini topla
+        const formData = new FormData(memberForm);
+
+        // Üyeyi kaydet
+        fetch('{{ url_for("members.create") }}', {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Başarılı kayıt - modal aç
+                const modal = new bootstrap.Modal(document.getElementById('receiptUploadModal'));
+                modal.show();
+
+                // Modal'da makbuz yükleme form action'ını ayarla
+                receiptUploadForm.action = `/members/${data.member_id}/receipt`;
+            } else {
+                // Hata durumu
+                alert('Hata: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Hata durumunda normal submit
+            memberForm.submit();
+        });
+    });
+
+    // Makbuz yükleme form submit
+    receiptUploadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(receiptUploadForm);
+
+        fetch(receiptUploadForm.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Başarılı yükleme
+                alert('Makbuz başarıyla yüklendi!');
+                window.location.href = '{{ url_for("members.list") }}';
+            } else {
+                alert('Makbuz yüklenirken hata oluştu!');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Makbuz yüklenirken hata oluştu!');
+        });
+    });
+
+    // Üye listesine git fonksiyonu
+    window.goToMemberList = function() {
+        window.location.href = '{{ url_for("members.list") }}';
+    };
+
+    // Enter tuşu ile kimlik numarası girişi
+    identityNumberInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            startMemberCreationBtn.click();
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.jinja2" %}
 
 {% block title %}Üye Detayı - DernekKapı{% endblock %}
 
@@ -112,7 +112,7 @@
                             <div>
                                 <small class="text-muted">{{ receipt.uploadDate|datetime }}</small>
                                 <br>
-                                <strong>{{ receipt.uploadPath.split('/')[-1] }}</strong>
+                                <strong>Makbuz #{{ loop.index }}</strong>
                             </div>
                             <a href="{{ url_for('static', filename=receipt.uploadPath) }}"
                                class="btn btn-sm btn-outline-primary" target="_blank">
@@ -138,19 +138,19 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <a href="#" class="btn btn-outline-primary w-100">
+                        <a href="{{ url_for('members.edit', member_id=member.id) }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-edit me-2"></i>
                             Düzenle
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="#" class="btn btn-outline-info w-100">
+                        <a href="{{ url_for('members.print_member', member_id=member.id) }}" class="btn btn-outline-info w-100" target="_blank">
                             <i class="fas fa-print me-2"></i>
                             Yazdır
                         </a>
                     </div>
                     <div class="col-md-3">
-                        <a href="#" class="btn btn-outline-success w-100">
+                        <a href="{{ url_for('members.pdf_member', member_id=member.id) }}" class="btn btn-outline-success w-100">
                             <i class="fas fa-file-pdf me-2"></i>
                             PDF İndir
                         </a>
@@ -172,8 +172,13 @@
 <script>
 function deleteMember(memberId) {
     if (confirm('Bu üyeyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
-        // AJAX ile silme işlemi yapılabilir
-        alert('Üye silme işlemi henüz implement edilmedi.');
+        // Form oluştur ve POST isteği gönder
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/members/${memberId}/delete`;
+
+        document.body.appendChild(form);
+        form.submit();
     }
 }
 </script>

@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.jinja2" %}
 
 {% block title %}Tüm Makbuzlar - DernekKapı{% endblock %}
 
@@ -26,7 +26,7 @@
                                 <th>Makbuz ID</th>
                                 <th>Dernek</th>
                                 <th>Üye</th>
-                                <th>Dosya Adı</th>
+                                <th>Makbuz</th>
                                 <th>Yükleme Tarihi</th>
                                 <th>İşlemler</th>
                             </tr>
@@ -46,9 +46,9 @@
                                     <code>{{ receipt_data.receipt.memberId[:8] }}...</code>
                                 </td>
                                 <td>
-                                    <strong>{{ receipt_data.receipt.uploadPath.split('/')[-1] }}</strong>
+                                    <strong>Makbuz #{{ loop.index }}</strong>
                                     <br>
-                                    <small class="text-muted">{{ receipt_data.receipt.uploadPath }}</small>
+                                    <small class="text-muted">{{ receipt_data.association.name }}</small>
                                 </td>
                                 <td>
                                     {{ receipt_data.receipt.uploadDate|datetime }}

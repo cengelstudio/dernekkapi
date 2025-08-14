@@ -143,6 +143,12 @@ class Member:
         }
         self.association = association_id
         self.membershipYear = str(datetime.now().year)
+        self.status = "pending"  # "pending", "approved", "rejected"
+        self.created_at = str(int(datetime.now().timestamp()))
+        self.updated_at = str(int(datetime.now().timestamp()))
+        self.approved_by = ""
+        self.approved_at = ""
+        self.rejection_reason = ""
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -167,7 +173,13 @@ class Member:
             "phoneNumber": self.phoneNumber,
             "gsm": self.gsm,
             "association": self.association,
-            "membershipYear": self.membershipYear
+            "membershipYear": self.membershipYear,
+            "status": self.status,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "approved_by": self.approved_by,
+            "approved_at": self.approved_at,
+            "rejection_reason": self.rejection_reason
         }
 
     @classmethod
@@ -191,6 +203,12 @@ class Member:
         member.phoneNumber = data.get("phoneNumber", "")
         member.gsm = data.get("gsm", {"countryCode": "+90", "operatorCode": "533", "number": "0000000"})
         member.membershipYear = data.get("membershipYear", str(datetime.now().year))
+        member.status = data.get("status", "pending")
+        member.created_at = data.get("created_at", str(int(datetime.now().timestamp())))
+        member.updated_at = data.get("updated_at", str(int(datetime.now().timestamp())))
+        member.approved_by = data.get("approved_by", "")
+        member.approved_at = data.get("approved_at", "")
+        member.rejection_reason = data.get("rejection_reason", "")
         return member
 
 class Receipt:

@@ -3,10 +3,23 @@ from app.config import Config
 from app.services.db import init_db
 from app.routes import auth, dashboard, admin, members
 from datetime import datetime
+import os
+from jinja2 import FileSystemLoader, Environment, ChoiceLoader
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
+    # Özel template loader oluştur (.jinja2 uzantısını destekler)
+    template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+
+    # .jinja2 uzantılı dosyalar için loader
+    jinja2_loader = FileSystemLoader(template_dir, followlinks=True)
+
+    # Flask'ın varsayılan template engine'ini özelleştir
+    app.jinja_env.loader = jinja2_loader
+    app.jinja_env.add_extension('jinja2.ext.do')
+    app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
     # Jinja2 filter'ları ekle
     @app.template_filter('datetime')

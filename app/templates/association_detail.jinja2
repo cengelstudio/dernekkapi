@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.jinja2" %}
 
 {% block title %}Dernek Detayı - DernekKapı{% endblock %}
 
@@ -164,7 +164,7 @@
                             <tr>
                                 <th>Makbuz ID</th>
                                 <th>Üye ID</th>
-                                <th>Dosya Adı</th>
+                                <th>Makbuz</th>
                                 <th>Yükleme Tarihi</th>
                                 <th>İşlemler</th>
                             </tr>
@@ -174,7 +174,7 @@
                             <tr>
                                 <td>{{ receipt.id[:8] }}...</td>
                                 <td>{{ receipt.memberId[:8] }}...</td>
-                                <td>{{ receipt.uploadPath.split('/')[-1] }}</td>
+                                <td><strong>Makbuz #{{ loop.index }}</strong></td>
                                 <td>{{ receipt.uploadDate|datetime }}</td>
                                 <td>
                                     <a href="{{ url_for('static', filename=receipt.uploadPath) }}"

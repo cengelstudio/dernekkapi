@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.jinja2" %}
 
 {% block title %}Üye Listesi - DernekKapı{% endblock %}
 
@@ -38,7 +38,7 @@
 
 <!-- Stats Summary -->
 <div class="row mb-4">
-    <div class="col-md-3 mb-3">
+    <div class="col-md-2 mb-3">
         <div class="stats-card primary">
             <div class="icon">
                 <i class="fas fa-users"></i>
@@ -47,8 +47,35 @@
             <div class="stats-label">Toplam Üye</div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
+    <div class="col-md-2 mb-3">
+        <div class="stats-card warning">
+            <div class="icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('status', 'equalto', 'pending')|list|length }}</div>
+            <div class="stats-label">Onay Bekleyen</div>
+        </div>
+    </div>
+    <div class="col-md-2 mb-3">
         <div class="stats-card success">
+            <div class="icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('status', 'equalto', 'approved')|list|length }}</div>
+            <div class="stats-label">Onaylanan</div>
+        </div>
+    </div>
+    <div class="col-md-2 mb-3">
+        <div class="stats-card danger">
+            <div class="icon">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="stats-number">{{ members|selectattr('status', 'equalto', 'rejected')|list|length }}</div>
+            <div class="stats-label">Reddedilen</div>
+        </div>
+    </div>
+    <div class="col-md-2 mb-3">
+        <div class="stats-card info">
             <div class="icon">
                 <i class="fas fa-calendar-check"></i>
             </div>
@@ -56,22 +83,13 @@
             <div class="stats-label">Bu Yıl</div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="stats-card info">
+    <div class="col-md-2 mb-3">
+        <div class="stats-card secondary">
             <div class="icon">
-                <i class="fas fa-phone"></i>
+                <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <div class="stats-number">{{ members|selectattr('phoneNumber', 'ne', '')|list|length }}</div>
-            <div class="stats-label">Telefon</div>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="stats-card warning">
-            <div class="icon">
-                <i class="fas fa-mobile-alt"></i>
-            </div>
-            <div class="stats-number">{{ members|selectattr('gsm.number', 'ne', '0000000')|list|length }}</div>
-            <div class="stats-label">GSM</div>
+            <div class="stats-number">{{ members_without_receipts|length }}</div>
+            <div class="stats-label">Makbuz Yüklenmeyen</div>
         </div>
     </div>
 </div>
@@ -131,6 +149,7 @@
                                 <th>Telefon</th>
                                 <th>GSM</th>
                                 <th>Üyelik Yılı</th>
+                                <th>Durum</th>
                                 <th>Makbuz</th>
                                 <th>İşlemler</th>
                             </tr>
@@ -168,6 +187,26 @@
                                 </td>
                                 <td>
                                     <span class="badge bg-primary">{{ member.membershipYear }}</span>
+                                </td>
+                                <td>
+                                    {% if member.status == 'pending' %}
+                                        <span class="badge bg-warning">
+                                            <i class="fas fa-clock me-1"></i>
+                                            Onay Bekliyor
+                                        </span>
+                                    {% elif member.status == 'approved' %}
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check me-1"></i>
+                                            Onaylandı
+                                        </span>
+                                    {% elif member.status == 'rejected' %}
+                                        <span class="badge bg-danger">
+                                            <i class="fas fa-times me-1"></i>
+                                            Reddedildi
+                                        </span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Bilinmiyor</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <span class="badge bg-secondary">0</span>

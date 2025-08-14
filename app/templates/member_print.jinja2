@@ -1,0 +1,254 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Üye Yazdır - DernekKapı{% endblock %}
+
+{% block extra_css %}
+<style>
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    .print-only {
+        display: block !important;
+    }
+    body {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    .card-header {
+        background: none !important;
+        border-bottom: 2px solid #000 !important;
+    }
+}
+
+.print-only {
+    display: none;
+}
+
+.member-info {
+    margin-bottom: 20px;
+}
+
+.info-section {
+    margin-bottom: 15px;
+    page-break-inside: avoid;
+}
+
+.info-section h6 {
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.info-row {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: bold;
+    min-width: 150px;
+    margin-right: 10px;
+}
+
+.info-value {
+    flex: 1;
+}
+
+.print-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+}
+
+.print-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="no-print">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ member.firstName }} {{ member.lastName }} - Yazdır</h1>
+        <div>
+            <button onclick="window.print()" class="btn btn-primary me-2">
+                <i class="fas fa-print me-2"></i>
+                Yazdır
+            </button>
+            <a href="{{ url_for('members.detail', member_id=member.id) }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>
+                Geri Dön
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="print-header">
+    <h1>DernekKapı - Üye Bilgileri</h1>
+    <h2>{{ member.firstName }} {{ member.lastName }}</h2>
+    <p>Yazdırma Tarihi: {{ current_time }}</p>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Üye Bilgileri</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-section">
+                            <h6>Kimlik Bilgileri</h6>
+                            <div class="info-row">
+                                <span class="info-label">Kimlik No:</span>
+                                <span class="info-value">{{ member.identityNumber }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Uyruk:</span>
+                                <span class="info-value">{{ member.nationality }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Ad:</span>
+                                <span class="info-value">{{ member.firstName }}</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Soyad:</span>
+                                <span class="info-value">{{ member.lastName }}</span>
+                            </div>
+                            {% if member.middleName %}
+                            <div class="info-row">
+                                <span class="info-label">İkinci Ad:</span>
+                                <span class="info-value">{{ member.middleName }}</span>
+                            </div>
+                            {% endif %}
+                            {% if member.birthSurname %}
+                            <div class="info-row">
+                                <span class="info-label">Doğum Soyadı:</span>
+                                <span class="info-value">{{ member.birthSurname }}</span>
+                            </div>
+                            {% endif %}
+                            {% if member.gender %}
+                            <div class="info-row">
+                                <span class="info-label">Cinsiyet:</span>
+                                <span class="info-value">{{ member.gender }}</span>
+                            </div>
+                            {% endif %}
+                            {% if member.birthDate %}
+                            <div class="info-row">
+                                <span class="info-label">Doğum Tarihi:</span>
+                                <span class="info-value">{{ member.birthDate }}</span>
+                            </div>
+                            {% endif %}
+                            {% if member.birthPlace %}
+                            <div class="info-row">
+                                <span class="info-label">Doğum Yeri:</span>
+                                <span class="info-value">{{ member.birthPlace }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-section">
+                            <h6>Aile Bilgileri</h6>
+                            {% if member.motherName %}
+                            <div class="info-row">
+                                <span class="info-label">Anne Adı:</span>
+                                <span class="info-value">{{ member.motherName }}</span>
+                            </div>
+                            {% endif %}
+                            {% if member.fatherName %}
+                            <div class="info-row">
+                                <span class="info-label">Baba Adı:</span>
+                                <span class="info-value">{{ member.fatherName }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="info-section">
+                            <h6>İletişim Bilgileri</h6>
+                            {% if member.phoneNumber %}
+                            <div class="info-row">
+                                <span class="info-label">Telefon:</span>
+                                <span class="info-value">{{ member.phoneNumber }}</span>
+                            </div>
+                            {% endif %}
+                            {% if member.gsm.number != '0000000' %}
+                            <div class="info-row">
+                                <span class="info-label">GSM:</span>
+                                <span class="info-value">{{ member.gsm.countryCode }}{{ member.gsm.operatorCode }}{{ member.gsm.number }}</span>
+                            </div>
+                            {% endif %}
+                            <div class="info-row">
+                                <span class="info-label">Üyelik Yılı:</span>
+                                <span class="info-value">{{ member.membershipYear }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if member.district or member.neighborhood or member.street %}
+                <div class="info-section">
+                    <h6>Adres Bilgileri</h6>
+                    <div class="info-row">
+                        <span class="info-label">Adres:</span>
+                        <span class="info-value">
+                            {% if member.district %}{{ member.district }}{% endif %}
+                            {% if member.neighborhood %}/ {{ member.neighborhood }}{% endif %}
+                            {% if member.street %}/ {{ member.street }}{% endif %}
+                            {% if member.buildingNameOrNumber %}/ {{ member.buildingNameOrNumber }}{% endif %}
+                            {% if member.doorNumber %}No: {{ member.doorNumber }}{% endif %}
+                            {% if member.apartmentNumber %}/ {{ member.apartmentNumber }}{% endif %}
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="info-section">
+                    <h6>Durum Bilgileri</h6>
+                    <div class="info-row">
+                        <span class="info-label">Durum:</span>
+                        <span class="info-value">
+                            {% if member.status == 'pending' %}
+                                <span class="badge bg-warning">Onay Bekliyor</span>
+                            {% elif member.status == 'approved' %}
+                                <span class="badge bg-success">Onaylandı</span>
+                            {% elif member.status == 'rejected' %}
+                                <span class="badge bg-danger">Reddedildi</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ member.status }}</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Oluşturulma Tarihi:</span>
+                        <span class="info-value">
+                            {% if member.created_at %}
+                                {{ member.created_at|datetime }}
+                            {% else %}
+                                Bilinmiyor
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="print-footer">
+    <p>Bu belge DernekKapı sistemi tarafından oluşturulmuştur.</p>
+    <p>© 2025 DernekKapı - Tüm hakları saklıdır.</p>
+</div>
+{% endblock %}

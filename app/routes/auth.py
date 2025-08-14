@@ -15,7 +15,7 @@ def login():
 
         if not username or not password:
             flash('Kullanıcı adı ve şifre gereklidir', 'error')
-            return render_template('login.html')
+            return render_template('login.jinja2')
 
         if user_type == 'admin':
             # Önce admin_users tablosunda ara
@@ -72,7 +72,7 @@ def login():
             else:
                 flash('Geçersiz kullanıcı adı veya şifre', 'error')
 
-    return render_template('login.html')
+    return render_template('login.jinja2')
 
 @bp.route('/logout')
 def logout():

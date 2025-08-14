@@ -84,6 +84,12 @@ def init_db():
             gsm TEXT,
             association TEXT NOT NULL,
             membershipYear TEXT NOT NULL,
+            status TEXT DEFAULT 'pending',
+            created_at TEXT,
+            updated_at TEXT,
+            approved_by TEXT,
+            approved_at TEXT,
+            rejection_reason TEXT,
             FOREIGN KEY (association) REFERENCES associations (id)
         )
     ''')
@@ -117,6 +123,39 @@ def init_db():
 
     conn.commit()
     conn.close()
+
+    # Mevcut members tablosuna eksik sütunları ekle
+    add_missing_columns_to_members()
+
+def add_missing_columns_to_members():
+    """Mevcut members tablosuna eksik sütunları ekle"""
+    try:
+        conn = get_db_connection()
+
+        # Sütunların var olup olmadığını kontrol et ve ekle
+        columns_to_add = [
+            ('status', 'TEXT DEFAULT "pending"'),
+            ('created_at', 'TEXT'),
+            ('updated_at', 'TEXT'),
+            ('approved_by', 'TEXT'),
+            ('approved_at', 'TEXT'),
+            ('rejection_reason', 'TEXT')
+        ]
+
+        for column_name, column_def in columns_to_add:
+            try:
+                conn.execute(f'ALTER TABLE members ADD COLUMN {column_name} {column_def}')
+                print(f"Added column {column_name} to members table")
+            except sqlite3.OperationalError as e:
+                if "duplicate column name" in str(e):
+                    print(f"Column {column_name} already exists")
+                else:
+                    print(f"Error adding column {column_name}: {e}")
+
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error in add_missing_columns_to_members: {e}")
 
 # User işlemleri
 def create_user(user: User) -> bool:
@@ -273,6 +312,16 @@ def get_association_by_username(username: str) -> Optional[Association]:
         return Association.from_dict(dict(assoc_data))
     return None
 
+def get_association_by_id(association_id: str) -> Optional[Association]:
+    """ID'ye göre dernek getir"""
+    conn = get_db_connection()
+    assoc_data = conn.execute('SELECT * FROM associations WHERE id = ?', (association_id,)).fetchone()
+    conn.close()
+
+    if assoc_data:
+        return Association.from_dict(dict(assoc_data))
+    return None
+
 def get_all_associations() -> List[Association]:
     """Tüm dernekleri getir"""
     conn = get_db_connection()
@@ -302,15 +351,16 @@ def create_member(member: Member) -> bool:
             (id, identityNumber, nationality, firstName, lastName, middleName, birthSurname,
              gender, birthPlace, motherName, birthDate, fatherName, district, neighborhood,
              street, buildingNameOrNumber, doorNumber, apartmentNumber, phoneNumber, gsm,
-             association, membershipYear)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             association, membershipYear, status, created_at, updated_at, approved_by, approved_at, rejection_reason)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             member.id, member.identityNumber, member.nationality, member.firstName,
             member.lastName, member.middleName, member.birthSurname, member.gender,
             member.birthPlace, member.motherName, member.birthDate, member.fatherName,
             member.district, member.neighborhood, member.street, member.buildingNameOrNumber,
             member.doorNumber, member.apartmentNumber, member.phoneNumber, json.dumps(member.gsm),
-            member.association, member.membershipYear
+            member.association, member.membershipYear, member.status, member.created_at,
+            member.updated_at, member.approved_by, member.approved_at, member.rejection_reason
         ))
         conn.commit()
         conn.close()
@@ -344,6 +394,61 @@ def get_member_by_id(member_id: str) -> Optional[Member]:
         member_dict['gsm'] = json.loads(member_dict['gsm'])
         return Member.from_dict(member_dict)
     return None
+
+def get_member_by_identity_and_association(identity_number: str, association_id: str) -> Optional[Member]:
+    """Kimlik numarası ve dernek ID'sine göre üye getir"""
+    conn = get_db_connection()
+    member_data = conn.execute('SELECT * FROM members WHERE identityNumber = ? AND association = ?',
+                              (identity_number, association_id)).fetchone()
+    conn.close()
+
+    if member_data:
+        member_dict = dict(member_data)
+        member_dict['gsm'] = json.loads(member_dict['gsm'])
+        return Member.from_dict(member_dict)
+    return None
+
+def update_member(member: Member) -> bool:
+    """Üye bilgilerini güncelle"""
+    try:
+        conn = get_db_connection()
+        conn.execute('''
+            UPDATE members
+            SET identityNumber = ?, nationality = ?, firstName = ?, lastName = ?, middleName = ?,
+                birthSurname = ?, gender = ?, birthPlace = ?, motherName = ?, birthDate = ?,
+                fatherName = ?, district = ?, neighborhood = ?, street = ?, buildingNameOrNumber = ?,
+                doorNumber = ?, apartmentNumber = ?, phoneNumber = ?, gsm = ?, membershipYear = ?,
+                status = ?, updated_at = ?
+            WHERE id = ?
+        ''', (
+            member.identityNumber, member.nationality, member.firstName, member.lastName,
+            member.middleName, member.birthSurname, member.gender, member.birthPlace,
+            member.motherName, member.birthDate, member.fatherName, member.district,
+            member.neighborhood, member.street, member.buildingNameOrNumber, member.doorNumber,
+            member.apartmentNumber, member.phoneNumber, json.dumps(member.gsm), member.membershipYear,
+            member.status, member.updated_at, member.id
+        ))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Member update error: {e}")
+        return False
+
+def delete_member(member_id: str) -> bool:
+    """Üyeyi sil"""
+    try:
+        conn = get_db_connection()
+        # Önce üyeye ait makbuzları sil
+        conn.execute('DELETE FROM receipts WHERE memberId = ?', (member_id,))
+        # Sonra üyeyi sil
+        conn.execute('DELETE FROM members WHERE id = ?', (member_id,))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Member deletion error: {e}")
+        return False
 
 # Receipt işlemleri
 def create_receipt(receipt: Receipt) -> bool:

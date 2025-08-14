@@ -1,0 +1,342 @@
+{% extends "layout.jinja2" %}
+
+{% block title %}Üye Düzenle - DernekKapı{% endblock %}
+
+{% block extra_css %}
+<style>
+.form-control-readonly {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+}
+
+.form-select-readonly {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+}
+
+.readonly-badge {
+    font-size: 0.75rem;
+    margin-left: 8px;
+}
+
+.field-disabled {
+    position: relative;
+}
+
+.field-disabled::after {
+    content: "Düzenlemeye Kapalı";
+    position: absolute;
+    top: -8px;
+    right: 0;
+    background: #6c757d;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    z-index: 10;
+}
+
+.editable-badge {
+    font-size: 0.75rem;
+    margin-left: 8px;
+}
+
+.field-editable {
+    position: relative;
+}
+
+.field-editable::after {
+    content: "Düzenlenebilir";
+    position: absolute;
+    top: -8px;
+    right: 0;
+    background: #28a745;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    z-index: 10;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">{{ member.firstName }} {{ member.lastName }} - Düzenle</h1>
+    <a href="{{ url_for('members.detail', member_id=member.id) }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>
+        Geri Dön
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-edit text-primary me-2"></i>
+                    Üye Bilgilerini Düzenle
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="row">
+                        <!-- Kimlik Bilgileri -->
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Kimlik Bilgileri</h6>
+
+                            <div class="mb-3">
+                                <label for="identityNumber" class="form-label">Kimlik Numarası *</label>
+                                <input type="text" class="form-control" id="identityNumber" name="identityNumber" value="{{ member.identityNumber }}" readonly>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nationality" class="form-label">Uyruk</label>
+                                <select class="form-select" id="nationality" name="nationality">
+                                    <option value="KT" {% if member.nationality == 'KT' %}selected{% endif %}>KT</option>
+                                    <option value="TC" {% if member.nationality == 'TC' %}selected{% endif %}>TC</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="firstName" class="form-label">Ad *</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" value="{{ member.firstName }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="lastName" class="form-label">Soyad *</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" value="{{ member.lastName }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="middleName" class="form-label">İkinci Ad</label>
+                                <input type="text" class="form-control" id="middleName" name="middleName" value="{{ member.middleName }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="birthSurname" class="form-label">Doğum Soyadı</label>
+                                <input type="text" class="form-control" id="birthSurname" name="birthSurname" value="{{ member.birthSurname }}">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">Cinsiyet</label>
+                                        <select class="form-select" id="gender" name="gender">
+                                            <option value="">Seçiniz</option>
+                                            <option value="Erkek" {% if member.gender == 'Erkek' %}selected{% endif %}>Erkek</option>
+                                            <option value="Kadın" {% if member.gender == 'Kadın' %}selected{% endif %}>Kadın</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="birthDate" class="form-label">Doğum Tarihi</label>
+                                        <input type="date" class="form-control" id="birthDate" name="birthDate" value="{{ member.birthDate }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="birthPlace" class="form-label">Doğum Yeri</label>
+                                <input type="text" class="form-control" id="birthPlace" name="birthPlace" value="{{ member.birthPlace }}">
+                            </div>
+                        </div>
+
+                        <!-- Aile Bilgileri -->
+                        <div class="col-md-6">
+                            <h6 class="mb-3">Aile Bilgileri</h6>
+
+                            <div class="mb-3">
+                                <label for="motherName" class="form-label">Anne Adı</label>
+                                <input type="text" class="form-control" id="motherName" name="motherName" value="{{ member.motherName }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fatherName" class="form-label">Baba Adı</label>
+                                <input type="text" class="form-control" id="fatherName" name="fatherName" value="{{ member.fatherName }}">
+                            </div>
+
+                            <h6 class="mb-3 mt-4">Adres Bilgileri</h6>
+
+                            <div class="mb-3">
+                                <label for="district" class="form-label">İlçe</label>
+                                <input type="text" class="form-control" id="district" name="district" value="{{ member.district }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="neighborhood" class="form-label">Mahalle/Köy</label>
+                                <input type="text" class="form-control" id="neighborhood" name="neighborhood" value="{{ member.neighborhood }}">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="street" class="form-label">Cadde/Sokak</label>
+                                <input type="text" class="form-control" id="street" name="street" value="{{ member.street }}">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="buildingNameOrNumber" class="form-label">Bina</label>
+                                        <input type="text" class="form-control" id="buildingNameOrNumber" name="buildingNameOrNumber" value="{{ member.buildingNameOrNumber }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="doorNumber" class="form-label">Dış Kapı No</label>
+                                        <input type="text" class="form-control" id="doorNumber" name="doorNumber" value="{{ member.doorNumber }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="apartmentNumber" class="form-label">İç Kapı No</label>
+                                        <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber" value="{{ member.apartmentNumber }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="mb-3">İletişim Bilgileri</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Telefon Numarası</label>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" value="{{ member.phoneNumber }}" placeholder="0212xxxxxxx">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="membershipYear" class="form-label">Üyelik Yılı</label>
+                                <input type="number" class="form-control" id="membershipYear" name="membershipYear" value="{{ member.membershipYear }}" min="1900" max="2100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="mb-3">GSM Bilgileri</h6>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="gsmCountryCode" class="form-label">Ülke Kodu</label>
+                                <input type="text" class="form-control" id="gsmCountryCode" name="gsmCountryCode" value="{{ member.gsm.countryCode }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label for="gsmOperatorCode" class="form-label">Operatör</label>
+                                <select class="form-select" id="gsmOperatorCode" name="gsmOperatorCode">
+                                    <option value="533" {% if member.gsm.operatorCode == '533' %}selected{% endif %}>533</option>
+                                    <option value="534" {% if member.gsm.operatorCode == '534' %}selected{% endif %}>534</option>
+                                    <option value="535" {% if member.gsm.operatorCode == '535' %}selected{% endif %}>535</option>
+                                    <option value="536" {% if member.gsm.operatorCode == '536' %}selected{% endif %}>536</option>
+                                    <option value="537" {% if member.gsm.operatorCode == '537' %}selected{% endif %}>537</option>
+                                    <option value="538" {% if member.gsm.operatorCode == '538' %}selected{% endif %}>538</option>
+                                    <option value="539" {% if member.gsm.operatorCode == '539' %}selected{% endif %}>539</option>
+                                    <option value="540" {% if member.gsm.operatorCode == '540' %}selected{% endif %}>540</option>
+                                    <option value="541" {% if member.gsm.operatorCode == '541' %}selected{% endif %}>541</option>
+                                    <option value="542" {% if member.gsm.operatorCode == '542' %}selected{% endif %}>542</option>
+                                    <option value="543" {% if member.gsm.operatorCode == '543' %}selected{% endif %}>543</option>
+                                    <option value="544" {% if member.gsm.operatorCode == '544' %}selected{% endif %}>544</option>
+                                    <option value="545" {% if member.gsm.operatorCode == '545' %}selected{% endif %}>545</option>
+                                    <option value="546" {% if member.gsm.operatorCode == '546' %}selected{% endif %}>546</option>
+                                    <option value="547" {% if member.gsm.operatorCode == '547' %}selected{% endif %}>547</option>
+                                    <option value="548" {% if member.gsm.operatorCode == '548' %}selected{% endif %}>548</option>
+                                    <option value="549" {% if member.gsm.operatorCode == '549' %}selected{% endif %}>549</option>
+                                    <option value="555" {% if member.gsm.operatorCode == '555' %}selected{% endif %}>555</option>
+                                    <option value="556" {% if member.gsm.operatorCode == '556' %}selected{% endif %}>556</option>
+                                    <option value="557" {% if member.gsm.operatorCode == '557' %}selected{% endif %}>557</option>
+                                    <option value="558" {% if member.gsm.operatorCode == '558' %}selected{% endif %}>558</option>
+                                    <option value="559" {% if member.gsm.operatorCode == '559' %}selected{% endif %}>559</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="gsmNumber" class="form-label">GSM Numarası</label>
+                                <input type="text" class="form-control" id="gsmNumber" name="gsmNumber" value="{{ member.gsm.number }}" placeholder="0000000" maxlength="7">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('members.detail', member_id=member.id) }}" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-times me-2"></i>
+                            İptal
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-save me-2"></i>
+                            Güncelle
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Readonly alanları işaretle
+    const readonlyFields = [
+        'identityNumber',
+        'firstName',
+        'lastName',
+        'middleName',
+        'birthSurname',
+        'gender',
+        'birthPlace',
+        'motherName',
+        'birthDate',
+        'fatherName'
+    ];
+
+    readonlyFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            // Readonly class'ları ekle
+            if (field.tagName === 'SELECT') {
+                field.classList.add('form-select-readonly');
+                field.disabled = true;
+            } else {
+                field.classList.add('form-control-readonly');
+                field.readOnly = true;
+            }
+
+            // Label'a badge ekle
+            const label = field.closest('.mb-3').querySelector('.form-label');
+            if (label) {
+                label.innerHTML += ' <span class="badge bg-secondary readonly-badge">Düzenlemeye Kapalı</span>';
+            }
+
+            // Container'a disabled class ekle
+            field.closest('.mb-3').classList.add('field-disabled');
+        }
+    });
+
+    // Form submit'i engelle (readonly alanlar için)
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const readonlyInputs = document.querySelectorAll('.form-control-readonly, .form-select-readonly');
+        readonlyInputs.forEach(input => {
+            if (input.tagName === 'SELECT') {
+                input.disabled = false; // Submit sırasında enable et
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

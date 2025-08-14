@@ -36,7 +36,7 @@ def index():
     receipts = get_receipts_by_association(association_id)
     receipt_count = len(receipts)
 
-    return render_template('dashboard.html',
+    return render_template('dashboard.jinja2',
                          association_name=association_name,
                          member_count=member_count,
                          receipt_count=receipt_count,
@@ -47,4 +47,4 @@ def index():
 def profile():
     """Dernek profil sayfası"""
     association_name = session.get('association_name', 'Dernek')
-    return render_template('profile.html', association_name=association_name)
+    return render_template('profile.jinja2', association_name=association_name)

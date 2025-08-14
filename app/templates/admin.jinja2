@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout.jinja2" %}
 
 {% block title %}Yönetim Paneli - DernekKapı{% endblock %}
 
@@ -72,6 +72,16 @@
     </div>
 
     <div class="col-md-6 col-lg-3 mb-3">
+        <div class="stats-card warning">
+            <div class="icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stats-number">{{ total_pending_members }}</div>
+            <div class="stats-label">Onay Bekleyen</div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
         <div class="stats-card info">
             <div class="icon">
                 <i class="fas fa-receipt"></i>
@@ -101,6 +111,7 @@
                                 <th>Kullanıcı Adı</th>
                                 <th>Şifre</th>
                                 <th>Üye Sayısı</th>
+                                <th>Onay Bekleyen</th>
                                 <th>Makbuz Sayısı</th>
                                 <th>Son Giriş</th>
                                 <th>İşlemler</th>
@@ -128,6 +139,13 @@
                                 </td>
                                 <td>
                                     <span class="badge bg-primary">{{ stat.member_count }}</span>
+                                </td>
+                                <td>
+                                    {% if stat.pending_count > 0 %}
+                                        <span class="badge bg-warning">{{ stat.pending_count }}</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">0</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     <span class="badge bg-success">{{ stat.receipt_count }}</span>
