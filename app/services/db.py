@@ -524,3 +524,45 @@ def check_member_receipt_status(member: Member) -> str:
         return "pending"
 
     return member.status
+
+def delete_receipt(receipt_id: str) -> bool:
+    """Makbuzu sil"""
+    try:
+        conn = get_db_connection()
+        # Önce makbuz dosyasını sil
+        receipt = get_receipt_by_id(receipt_id)
+        if receipt:
+            from app.services.file_upload import delete_receipt_file
+            delete_receipt_file(receipt.uploadPath)
+
+        # Sonra veritabanından sil
+        conn.execute('DELETE FROM receipts WHERE id = ?', (receipt_id,))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Receipt deletion error: {e}")
+        return False
+
+def get_receipt_number_for_member(receipt_id: str, member_id: str) -> int:
+    """Üyenin makbuzlarını tarihe göre sıralayıp, belirtilen makbuzun kaçıncı olduğunu döndür"""
+    try:
+        conn = get_db_connection()
+        # Üyenin tüm makbuzlarını tarihe göre sırala
+        receipts = conn.execute('''
+            SELECT id FROM receipts
+            WHERE memberId = ?
+            ORDER BY uploadDate ASC
+        ''', (member_id,)).fetchall()
+
+        conn.close()
+
+        # Makbuzun sırasını bul
+        for index, receipt in enumerate(receipts, 1):
+            if receipt['id'] == receipt_id:
+                return index
+
+        return 0  # Makbuz bulunamadı
+    except Exception as e:
+        print(f"Receipt number error: {e}")
+        return 0

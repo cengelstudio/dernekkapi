@@ -123,10 +123,20 @@ def association_detail(association_id):
     # Derneğin makbuzlarını al
     receipts = get_receipts_by_association(association_id)
 
+    # Makbuz numaralarını hesapla
+    from app.services.db import get_receipt_number_for_member
+    receipts_with_numbers = []
+    for receipt in receipts:
+        receipt_number = get_receipt_number_for_member(receipt.id, receipt.memberId)
+        receipts_with_numbers.append({
+            'receipt': receipt,
+            'number': receipt_number
+        })
+
     return render_template('association_detail.jinja2',
                          association=association,
                          members=members,
-                         receipts=receipts)
+                         receipts=receipts_with_numbers)
 
 @bp.route('/members')
 @admin_required
@@ -298,7 +308,7 @@ def reject_member(member_id):
 @admin_required
 def all_receipts():
     """Tüm makbuzları listele"""
-    from app.services.db import get_member_by_id
+    from app.services.db import get_member_by_id, get_receipt_number_for_member
 
     associations = get_all_associations()
     all_receipts = []
@@ -308,10 +318,13 @@ def all_receipts():
         for receipt in receipts:
             # Üye bilgilerini al
             member = get_member_by_id(receipt.memberId)
+            # Makbuz numarasını hesapla
+            receipt_number = get_receipt_number_for_member(receipt.id, receipt.memberId) if member else 0
             all_receipts.append({
                 'receipt': receipt,
                 'association': association,
-                'member': member
+                'member': member,
+                'receipt_number': receipt_number
             })
 
     return render_template('all_receipts.jinja2', receipts=all_receipts)
@@ -325,12 +338,12 @@ def receipt_details(receipt_id):
     receipt = get_receipt_by_id(receipt_id)
     if not receipt:
         flash('Makbuz bulunamadı', 'error')
-        return redirect(url_for('admin.receipts'))
+        return redirect(url_for('admin.all_receipts'))
 
     member = get_member_by_id(receipt.memberId)
     if not member:
         flash('Üye bilgileri bulunamadı', 'error')
-        return redirect(url_for('admin.receipts'))
+        return redirect(url_for('admin.all_receipts'))
 
     # Üye detay sayfasına yönlendir
     return redirect(url_for('members.detail', member_id=member.id))
@@ -480,4 +493,20 @@ def login_as_association(association_id):
     flash(f'"{association.name}" derneği adına giriş yapıldı. Admin paneline dönmek için çıkış yapıp tekrar giriş yapmanız gerekiyor.', 'success')
     return redirect(url_for('dashboard.index'))
 
+@bp.route('/receipts/<receipt_id>/delete', methods=['POST'])
+@admin_required
+def delete_receipt(receipt_id):
+    """Makbuzu sil"""
+    from app.services.db import get_receipt_by_id, delete_receipt as db_delete_receipt
 
+    receipt = get_receipt_by_id(receipt_id)
+    if not receipt:
+        flash('Makbuz bulunamadı', 'error')
+        return redirect(url_for('admin.all_receipts'))
+
+    if db_delete_receipt(receipt_id):
+        flash('Makbuz başarıyla silindi', 'success')
+    else:
+        flash('Makbuz silinirken hata oluştu', 'error')
+
+    return redirect(url_for('admin.all_receipts'))

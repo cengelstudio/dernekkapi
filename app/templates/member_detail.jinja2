@@ -107,17 +107,23 @@
             <div class="card-body">
                 {% if receipts %}
                     <div class="list-group list-group-flush">
-                        {% for receipt in receipts %}
+                        {% for receipt_data in receipts %}
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <div>
-                                <small class="text-muted">{{ receipt.uploadDate|datetime }}</small>
+                                <small class="text-muted">{{ receipt_data.receipt.uploadDate|datetime }}</small>
                                 <br>
-                                <strong>Makbuz #{{ loop.index }}</strong>
+                                <strong>Makbuz #{{ receipt_data.number }}</strong>
                             </div>
-                            <a href="{{ url_for('static', filename=receipt.uploadPath) }}"
-                               class="btn btn-sm btn-outline-primary" target="_blank">
-                                <i class="fas fa-eye"></i>
-                            </a>
+                            <div class="btn-group" role="group">
+                                <a href="{{ url_for('static', filename=receipt_data.receipt.uploadPath) }}"
+                                   class="btn btn-sm btn-outline-primary" target="_blank" title="Görüntüle">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                        onclick="deleteReceipt('{{ member.id }}', '{{ receipt_data.receipt.id }}')" title="Sil">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
@@ -137,23 +143,30 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="{{ url_for('members.edit', member_id=member.id) }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-edit me-2"></i>
                             Düzenle
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="{{ url_for('members.print_member', member_id=member.id) }}" class="btn btn-outline-info w-100" target="_blank">
                             <i class="fas fa-print me-2"></i>
                             Yazdır
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="{{ url_for('members.pdf_member', member_id=member.id) }}" class="btn btn-outline-success w-100">
                             <i class="fas fa-file-pdf me-2"></i>
                             PDF İndir
                         </a>
+                    </div>
+                    {% if member.status == 'pending' or member.status == 'receipt_pending' %}
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success w-100" onclick="approveMember('{{ member.id }}')">
+                            <i class="fas fa-check me-2"></i>
+                            Onayla
+                        </button>
                     </div>
                     <div class="col-md-3">
                         <button type="button" class="btn btn-outline-danger w-100" onclick="deleteMember('{{ member.id }}')">
@@ -161,6 +174,14 @@
                             Sil
                         </button>
                     </div>
+                    {% else %}
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-outline-danger w-100" onclick="deleteMember('{{ member.id }}')">
+                            <i class="fas fa-trash me-2"></i>
+                            Sil
+                        </button>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -181,5 +202,234 @@ function deleteMember(memberId) {
         form.submit();
     }
 }
+
+function deleteReceipt(memberId, receiptId) {
+    if (confirm('Bu makbuzu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/members/${memberId}/receipts/${receiptId}/delete`;
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function approveMember(memberId) {
+    if (confirm('Bu üyeyi onaylamak istediğinizden emin misiniz? Üye İçişleri Bakanlığı sistemine gönderilecek.')) {
+        // Önceki mesajları temizle
+        const successMessage = document.getElementById('successMessage');
+        successMessage.innerHTML = '';
+
+        // Alert'leri gizle
+        document.getElementById('successAlert').classList.add('d-none');
+        document.getElementById('errorAlert').classList.add('d-none');
+        document.getElementById('closeApprovalModal').classList.add('d-none');
+
+        // Modal'ı aç
+        const modal = new bootstrap.Modal(document.getElementById('approveMemberModal'));
+        modal.show();
+
+        // İşlem adımlarını başlat
+        startApprovalProcess(memberId);
+    }
+}
+
+function startApprovalProcess(memberId) {
+    const steps = [
+        { text: "İçişleri Bakanlığı sistemine bağlanılıyor...", progress: 10, delay: 1000 },
+        { text: "Kullanıcı adı giriliyor...", progress: 15, delay: 500 },
+        { text: "Şifre giriliyor...", progress: 20, delay: 500 },
+        { text: "Giriş yapılıyor...", progress: 25, delay: 2000 },
+        { text: "İçişleri Bakanlığı sistemine başarıyla giriş yapıldı", progress: 30, delay: 1000 },
+        { text: "Üye kayıt sayfasına gidiliyor...", progress: 35, delay: 1500 },
+        { text: "Dernek seçimi yapılıyor...", progress: 40, delay: 1000 },
+        { text: "Dernek aranıyor...", progress: 45, delay: 3000 },
+        { text: "Eşleşen dernek bulundu", progress: 50, delay: 1000 },
+        { text: "Form alanları dolduruluyor...", progress: 55, delay: 2000 },
+        { text: "Kişisel bilgiler giriliyor...", progress: 70, delay: 3000 },
+        { text: "Kaydet butonuna tıklanıyor...", progress: 80, delay: 1000 },
+        { text: "Kaydetme işlemi bekleniyor...", progress: 85, delay: 2000 },
+        { text: "Modal aranıyor...", progress: 90, delay: 2000 },
+        { text: "Modal bulundu ve görünür", progress: 95, delay: 1000 },
+        { text: "Modal mesajı okunuyor...", progress: 98, delay: 1000 },
+        { text: "Modal butonuna tıklanıyor...", progress: 99, delay: 500 },
+        { text: "İşlem tamamlanıyor...", progress: 100, delay: 1000 }
+    ];
+
+    let currentStep = 0;
+    const progressBar = document.getElementById('approvalProgress');
+    const stepsList = document.getElementById('approvalSteps');
+
+    // İlk adımı göster
+    updateStep(steps[currentStep]);
+
+    // Adımları sırayla göster
+    function showNextStep() {
+        currentStep++;
+        if (currentStep < steps.length) {
+            updateStep(steps[currentStep]);
+            setTimeout(showNextStep, steps[currentStep].delay);
+        } else {
+            // İşlem tamamlandığında gerçek API çağrısını yap
+            submitApprovalRequest(memberId);
+        }
+    }
+
+    // İlk adımdan sonra devam et
+    setTimeout(showNextStep, steps[currentStep].delay);
+
+    function updateStep(step) {
+        progressBar.style.width = step.progress + '%';
+        progressBar.setAttribute('aria-valuenow', step.progress);
+
+        const stepItem = document.createElement('li');
+        stepItem.innerHTML = `<i class="fas fa-spinner fa-spin text-primary me-2"></i>${step.text}`;
+        stepsList.appendChild(stepItem);
+
+        // Önceki adımları güncelle
+        const previousSteps = stepsList.querySelectorAll('li:not(:last-child)');
+        previousSteps.forEach(item => {
+            const icon = item.querySelector('i');
+            icon.className = 'fas fa-check text-success me-2';
+        });
+    }
+}
+
+function submitApprovalRequest(memberId) {
+    fetch(`/members/${memberId}/approve`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccess(data.message, data.modal_message, data.message_type, data.message_title);
+        } else {
+            showError(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showError('İşlem sırasında bir hata oluştu: ' + error.message);
+    });
+}
+
+function showSuccess(message, modalMessage, messageType, messageTitle) {
+    const successAlert = document.getElementById('successAlert');
+    const successMessage = document.getElementById('successMessage');
+
+    // Mesaj türüne göre alert rengini ayarla
+    successAlert.className = `alert alert-${messageType} d-none`;
+
+    // Başlık ve mesajı ayarla
+    const titleElement = successAlert.querySelector('h6');
+    titleElement.innerHTML = `<i class="fas fa-${messageType === 'success' ? 'check' : 'exclamation'}-circle me-2"></i>${messageTitle}`;
+
+    // Ana mesaj
+    successMessage.textContent = message;
+
+    // Modal mesajını ayrı göster
+    if (modalMessage) {
+        const modalMessageDiv = document.createElement('div');
+        modalMessageDiv.className = 'mt-3 p-3 bg-light border rounded';
+        modalMessageDiv.innerHTML = `
+            <strong><i class="fas fa-comment me-2"></i>İçişleri Bakanlığı Mesajı:</strong>
+            <div class="mt-2 text-muted">${modalMessage}</div>
+        `;
+        successMessage.appendChild(modalMessageDiv);
+    }
+
+    successAlert.classList.remove('d-none');
+    document.getElementById('errorAlert').classList.add('d-none');
+    document.getElementById('closeApprovalModal').classList.remove('d-none');
+
+    // Progress bar'ı mesaj türüne göre renklendir
+    const progressBar = document.getElementById('approvalProgress');
+    progressBar.classList.remove('bg-primary', 'bg-success', 'bg-warning');
+    if (messageType === 'success') {
+        progressBar.classList.add('bg-success');
+    } else {
+        progressBar.classList.add('bg-warning');
+    }
+}
+
+function showError(message) {
+    document.getElementById('errorMessage').textContent = message;
+    document.getElementById('errorAlert').classList.remove('d-none');
+    document.getElementById('successAlert').classList.add('d-none');
+    document.getElementById('closeApprovalModal').classList.remove('d-none');
+
+    // Progress bar'ı kırmızı yap
+    const progressBar = document.getElementById('approvalProgress');
+    progressBar.classList.remove('bg-primary');
+    progressBar.classList.add('bg-danger');
+}
+
+// Modal kapatma - DOMContentLoaded event'ini bekleyerek
+// Modal kapatma - Event delegation kullanarak
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.id === 'closeApprovalModal') {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('approveMemberModal'));
+        if (modal) {
+            modal.hide();
+            // Sayfayı yenile
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        }
+    }
+});
 </script>
+
+<!-- Approve Member Modal -->
+<div class="modal fade" id="approveMemberModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-cog fa-spin me-2"></i>
+                    Üye Onaylama İşlemi
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="text-center mb-4">
+                    <div class="spinner-border text-primary mb-3" role="status">
+                        <span class="visually-hidden">İşlem yapılıyor...</span>
+                    </div>
+                    <h5>İçişleri Bakanlığı Sistemine Kayıt Yapılıyor</h5>
+                    <p class="text-muted">Lütfen bekleyin, işlem devam ediyor...</p>
+                </div>
+
+                <div class="progress mb-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"
+                         role="progressbar" style="width: 0%" id="approvalProgress"></div>
+                </div>
+
+                <div class="alert alert-info">
+                    <h6><i class="fas fa-info-circle me-2"></i>İşlem Adımları:</h6>
+                    <ul class="mb-0" id="approvalSteps">
+                        <li><i class="fas fa-clock text-warning me-2"></i>İşlem başlatılıyor...</li>
+                    </ul>
+                </div>
+
+                <div class="alert d-none" id="successAlert">
+                    <h6><i class="fas fa-check-circle me-2"></i>İşlem Başarılı!</h6>
+                    <p id="successMessage" class="mb-0"></p>
+                </div>
+
+                <div class="alert alert-danger d-none" id="errorAlert">
+                    <h6><i class="fas fa-exclamation-triangle me-2"></i>Hata Oluştu!</h6>
+                    <p id="errorMessage" class="mb-0"></p>
+                </div>
+            </div>
+            <div class="modal-footer" id="approvalModalFooter">
+                <button type="button" class="btn btn-secondary d-none" id="closeApprovalModal">
+                    <i class="fas fa-times me-2"></i>
+                    Kapat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

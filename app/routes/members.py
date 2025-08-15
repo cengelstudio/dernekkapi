@@ -57,6 +57,7 @@ def create():
         gsm_number = request.form.get('gsmNumber', '0000000')
 
         membership_year = request.form.get('membershipYear', str(datetime.now().year))
+        auto_approve = request.form.get('autoApprove') == 'on'
 
         # Zorunlu alanları kontrol et
         if not identity_number or not first_name or not last_name:
@@ -152,15 +153,91 @@ def create():
         else:
             # Yeni üye oluşturma
             if create_member(member):
-                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                    return jsonify({
-                        'success': True,
-                        'message': 'Üye başarıyla oluşturuldu ve onay için bekliyor',
-                        'member_id': member.id
-                    })
+                # Otomatik onaylama isteniyorsa
+                if auto_approve:
+                    try:
+                        # İçişleri Bakanlığı sistemine gönder
+                        from app.services.icisleri_submit_bot import IcisleriSubmitBot
+                        from app.services.db import get_association_by_id
+                        from config import ICISLERI_CONFIG
+
+                        association = get_association_by_id(association_id)
+                        if association:
+                            bot = IcisleriSubmitBot()
+
+                            # Giriş yap
+                            if bot.login_to_icisleri(ICISLERI_CONFIG['username'], ICISLERI_CONFIG['password']):
+                                # Üyeyi sisteme kaydet
+                                member_data = member.to_dict()
+                                association_data = association.to_dict()
+                                result = bot.submit_member_to_icisleri(member_data, association_data)
+
+                                if result['success'] and "Yeni Kayıt Yapıldı" in result.get("message", ""):
+                                    # Başarılı onaylama
+                                    member.status = 'approved'
+                                    member.approved_by = association.name
+                                    member.approved_at = str(int(datetime.now().timestamp()))
+                                    member.updated_at = str(int(datetime.now().timestamp()))
+                                    update_member(member)
+
+                                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                                        return jsonify({
+                                            'success': True,
+                                            'message': 'Üye başarıyla oluşturuldu ve otomatik olarak onaylandı!',
+                                            'member_id': member.id,
+                                            'auto_approved': True
+                                        })
+                                    else:
+                                        flash('Üye başarıyla oluşturuldu ve otomatik olarak onaylandı!', 'success')
+                                        return redirect(url_for('members.list'))
+                                else:
+                                    # Onaylama başarısız ama üye kaydedildi
+                                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                                        return jsonify({
+                                            'success': True,
+                                            'message': 'Üye başarıyla oluşturuldu fakat otomatik onaylama başarısız oldu. Manuel onaylama gerekli.',
+                                            'member_id': member.id,
+                                            'auto_approved': False
+                                        })
+                                    else:
+                                        flash('Üye başarıyla oluşturuldu fakat otomatik onaylama başarısız oldu. Manuel onaylama gerekli.', 'warning')
+                                        return redirect(url_for('members.list'))
+                            else:
+                                # Giriş başarısız ama üye kaydedildi
+                                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                                    return jsonify({
+                                        'success': True,
+                                        'message': 'Üye başarıyla oluşturuldu fakat otomatik onaylama için giriş yapılamadı. Manuel onaylama gerekli.',
+                                        'member_id': member.id,
+                                        'auto_approved': False
+                                    })
+                                else:
+                                    flash('Üye başarıyla oluşturuldu fakat otomatik onaylama için giriş yapılamadı. Manuel onaylama gerekli.', 'warning')
+                                    return redirect(url_for('members.list'))
+                    except Exception as e:
+                        # Hata durumunda üye kaydedildi ama onaylanamadı
+                        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                            return jsonify({
+                                'success': True,
+                                'message': f'Üye başarıyla oluşturuldu fakat otomatik onaylama sırasında hata oluştu: {str(e)}. Manuel onaylama gerekli.',
+                                'member_id': member.id,
+                                'auto_approved': False
+                            })
+                        else:
+                            flash(f'Üye başarıyla oluşturuldu fakat otomatik onaylama sırasında hata oluştu: {str(e)}. Manuel onaylama gerekli.', 'warning')
+                            return redirect(url_for('members.list'))
                 else:
-                    flash('Üye başarıyla oluşturuldu ve onay için bekliyor', 'success')
-                    return redirect(url_for('members.list'))
+                    # Otomatik onaylama istenmiyor
+                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                        return jsonify({
+                            'success': True,
+                            'message': 'Üye başarıyla oluşturuldu ve onay için bekliyor',
+                            'member_id': member.id,
+                            'auto_approved': False
+                        })
+                    else:
+                        flash('Üye başarıyla oluşturuldu ve onay için bekliyor', 'success')
+                        return redirect(url_for('members.list'))
             else:
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                     return jsonify({
@@ -242,7 +319,17 @@ def detail(member_id):
     # Üyenin makbuzlarını al
     receipts = get_receipts_by_member(member_id)
 
-    return render_template('member_detail.jinja2', member=member, receipts=receipts)
+    # Makbuz numaralarını hesapla
+    from app.services.db import get_receipt_number_for_member
+    receipts_with_numbers = []
+    for receipt in receipts:
+        receipt_number = get_receipt_number_for_member(receipt.id, member_id)
+        receipts_with_numbers.append({
+            'receipt': receipt,
+            'number': receipt_number
+        })
+
+    return render_template('member_detail.jinja2', member=member, receipts=receipts_with_numbers)
 
 @bp.route('/<member_id>/receipt', methods=['POST'])
 @login_required
@@ -282,6 +369,108 @@ def upload_receipt(member_id):
         flash('Makbuz başarıyla yüklendi', 'success')
     else:
         flash('Makbuz kaydedilirken hata oluştu', 'error')
+
+    return redirect(url_for('members.detail', member_id=member_id))
+
+@bp.route('/<member_id>/approve', methods=['POST'])
+@login_required
+def approve_member(member_id):
+    """Dernek tarafından üyeyi onayla ve İçişleri Bakanlığı sistemine kaydet"""
+    from app.services.db import get_member_by_id, update_member, get_association_by_id
+    from app.services.icisleri_submit_bot import IcisleriSubmitBot
+    from datetime import datetime
+
+    # Üye kontrolü
+    association_id = session.get('user_id')
+    member = get_member_by_id(member_id)
+
+    if not member or member.association != association_id:
+        flash('Üye bulunamadı', 'error')
+        return redirect(url_for('members.list'))
+
+    # Dernek bilgilerini al
+    association = get_association_by_id(association_id)
+    if not association:
+        flash('Dernek bilgileri bulunamadı', 'error')
+        return redirect(url_for('members.list'))
+
+    # Progress callback fonksiyonu
+    def progress_callback(message, progress):
+        print(f"Progress: {progress}% - {message}")
+
+    # Config'den bilgileri al
+    try:
+        from config import ICISLERI_CONFIG
+    except ImportError:
+        flash('Konfigürasyon dosyası bulunamadı', 'error')
+        return redirect(url_for('members.list'))
+
+    # İçişleri Bakanlığı sistemine kaydet
+    bot = IcisleriSubmitBot(progress_callback=progress_callback)
+    try:
+        # Giriş yap
+        if not bot.login_to_icisleri(ICISLERI_CONFIG['username'], ICISLERI_CONFIG['password']):
+            flash('İçişleri Bakanlığı sistemine giriş yapılamadı', 'error')
+            return redirect(url_for('members.detail', member_id=member_id))
+
+        # Üyeyi sisteme kaydet
+        member_data = member.to_dict()
+        association_data = association.to_dict()
+
+        result = bot.submit_member_to_icisleri(member_data, association_data)
+
+        if result['success']:
+            # Mesaj türüne göre renklendirme ve status güncelleme
+            modal_message = result.get("message", "")
+
+            if "Yeni Kayıt Yapıldı" in modal_message:
+                # Sadece "Yeni Kayıt Yapıldı" mesajı geldiğinde status'u approved yap
+                member.status = 'approved'
+                member.approved_by = association.name
+                member.approved_at = str(int(datetime.now().timestamp()))
+                member.updated_at = str(int(datetime.now().timestamp()))
+
+                message_type = "success"
+                message_title = "✅ Başarılı"
+                success_message = f'{member.firstName} {member.lastName} başarıyla onaylandı ve İçişleri Bakanlığı sistemine kaydedildi.'
+            else:
+                # Diğer mesajlar geldiğinde status değişmesin, hala onay bekliyor
+                member.updated_at = str(int(datetime.now().timestamp()))
+
+                message_type = "warning"
+                message_title = "⚠️ Uyarı"
+                success_message = f'{member.firstName} {member.lastName} için İçişleri Bakanlığı sisteminden mesaj alındı: {modal_message}'
+
+            if update_member(member):
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return jsonify({
+                        'success': True,
+                        'message': success_message,
+                        'modal_message': modal_message,
+                        'message_type': message_type,
+                        'message_title': message_title
+                    })
+                else:
+                    flash(success_message, message_type)
+            else:
+                error_message = 'Üye onaylanırken hata oluştu'
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return jsonify({'success': False, 'message': error_message})
+                else:
+                    flash(error_message, 'error')
+        else:
+            error_message = f'İçişleri Bakanlığı sistemine kayıt başarısız: {result["message"]}'
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return jsonify({'success': False, 'message': error_message})
+            else:
+                flash(error_message, 'error')
+
+    except Exception as e:
+        error_message = f'İçişleri Bakanlığı sistemi hatası: {str(e)}'
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({'success': False, 'message': error_message})
+        else:
+            flash(error_message, 'error')
 
     return redirect(url_for('members.detail', member_id=member_id))
 
@@ -567,3 +756,30 @@ def pdf_member(member_id):
         as_attachment=True,
         download_name=f'uye_{member.identityNumber}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.jinja2'
     )
+
+@bp.route('/<member_id>/receipts/<receipt_id>/delete', methods=['POST'])
+@login_required
+def delete_member_receipt(member_id, receipt_id):
+    """Üye makbuzunu sil"""
+    from app.services.db import get_receipt_by_id, delete_receipt as db_delete_receipt, get_member_by_id
+
+    # Üye kontrolü
+    association_id = session.get('user_id')
+    member = get_member_by_id(member_id)
+
+    if not member or member.association != association_id:
+        flash('Üye bulunamadı', 'error')
+        return redirect(url_for('members.list'))
+
+    # Makbuz kontrolü
+    receipt = get_receipt_by_id(receipt_id)
+    if not receipt or receipt.memberId != member_id:
+        flash('Makbuz bulunamadı', 'error')
+        return redirect(url_for('members.detail', member_id=member_id))
+
+    if db_delete_receipt(receipt_id):
+        flash('Makbuz başarıyla silindi', 'success')
+    else:
+        flash('Makbuz silinirken hata oluştu', 'error')
+
+    return redirect(url_for('members.detail', member_id=member_id))

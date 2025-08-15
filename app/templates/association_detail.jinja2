@@ -170,14 +170,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for receipt in receipts %}
+                            {% for receipt_data in receipts %}
                             <tr>
-                                <td>{{ receipt.id[:8] }}...</td>
-                                <td>{{ receipt.memberId[:8] }}...</td>
-                                <td><strong>Makbuz #{{ loop.index }}</strong></td>
-                                <td>{{ receipt.uploadDate|datetime }}</td>
+                                <td>{{ receipt_data.receipt.id[:8] }}...</td>
+                                <td>{{ receipt_data.receipt.memberId[:8] }}...</td>
+                                <td><strong>Makbuz #{{ receipt_data.number }}</strong></td>
+                                <td>{{ receipt_data.receipt.uploadDate|datetime }}</td>
                                 <td>
-                                    <a href="{{ url_for('static', filename=receipt.uploadPath) }}"
+                                    <a href="{{ url_for('static', filename=receipt_data.receipt.uploadPath) }}"
                                        class="btn btn-sm btn-outline-primary" target="_blank">
                                         <i class="fas fa-eye"></i>
                                     </a>

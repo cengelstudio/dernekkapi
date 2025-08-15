@@ -68,7 +68,7 @@
                                     <div class="d-md-none">
                                         <strong>Makbuz:</strong><br>
                                     </div>
-                                    <strong>Makbuz #{{ loop.index }}</strong>
+                                    <strong>Makbuz #{{ receipt_data.receipt_number }}</strong>
                                     <br>
                                     <small class="text-muted">{{ receipt_data.association.name }}</small>
                                 </td>
@@ -94,6 +94,10 @@
                                         <button type="button" class="btn btn-sm btn-outline-success"
                                                 onclick="downloadReceipt('{{ receipt_data.receipt.uploadPath }}')" title="İndir">
                                             <i class="fas fa-download"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                                onclick="deleteReceipt('{{ receipt_data.receipt.id }}')" title="Sil">
+                                            <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
                                 </td>
@@ -129,6 +133,16 @@ function downloadReceipt(filePath) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+}
+
+function deleteReceipt(receiptId) {
+    if (confirm('Bu makbuzu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin/receipts/' + receiptId + '/delete';
+        document.body.appendChild(form);
+        form.submit();
+    }
 }
 </script>
 {% endblock %}

@@ -154,3 +154,6 @@ tmp/
 *.bak
 *.backup
 *.old
+
+# ChromeDriver
+*chromedriver*
